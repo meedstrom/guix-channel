@@ -24,8 +24,8 @@
   ;; :use-module (gnu)
   :use-module (srfi srfi-1)) ;; alist-delete
 
-;; (define kern-build-config "/home/keep/guix/kconf-merged-5.6.config")
-(define kern-build-config "kconf-merged-5.4.config")
+(define kern-build-config "/home/kept/Guix channel/mee/kconf-merged-5.4.config")
+;; (define kern-build-config "kconf-merged-5.4.config")
 
 (define-public linux-meedstrom
   (package

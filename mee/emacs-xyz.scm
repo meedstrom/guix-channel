@@ -22,6 +22,93 @@
   #:use-module (guix build-system emacs)
   #:use-module (gnu packages emacs-xyz))
 
+;; (define-public emacs-helm-core
+;;   (package
+;;     (name "emacs-helm-core")
+;;     (version "20200429.1931")
+;;     (source
+;;       (origin
+;;         (method url-fetch)
+;;         (uri (string-append
+;;                "https://melpa.org/packages/helm-core-"
+;;                version
+;;                ".tar"))
+;;         (sha256
+;;           (base32
+;;             "1pzsjg12flynvygsgdyi0gsbhf27dghjhzcssg9cm25shhsl7c0x"))))
+;;     (build-system emacs-build-system)
+;;     (propagated-inputs
+;;       `(("emacs-async" ,emacs-async)))
+;;     (home-page "https://emacs-helm.github.io/helm/")
+;;     (synopsis "Development files for Helm")
+;;     (description "No description available.")
+;;     (license #f)))
+
+(define-public emacs-helm-themes
+  (package
+    (name "emacs-helm-themes")
+    (version "20200323.712")
+    (source
+      (origin
+        (method url-fetch)
+        (uri (string-append
+               "https://melpa.org/packages/helm-themes-"
+               version
+               ".el"))
+        (sha256
+          (base32
+            "03kbzkjr2dy8rh96ddzpx5hykmak3h082jl9j1aq8lhmmvc6pd05"))))
+    (build-system emacs-build-system)
+    (propagated-inputs
+     `(("emacs-helm" ,emacs-helm)))
+    (home-page
+      "https://github.com/syohex/emacs-helm-themes")
+    (synopsis
+      "Color theme selection with helm interface")
+    (description
+      "helm-themes.el provide theme selection with helm interface.
+Its persistent action can set theme temporary.
+")
+    (license #f)))
+
+(define-public emacs-artbollocks-mode
+  (package
+    (name "emacs-artbollocks-mode")
+    (version "20170524.422")
+    (source
+      (origin
+        (method url-fetch)
+        (uri (string-append
+               "https://melpa.org/packages/artbollocks-mode-"
+               version
+               ".el"))
+        (sha256
+          (base32
+            "1gk6xqm96qvpxwh3425h96gj84km4msvslz9nad7v5nkd4djgbxa"))))
+    (build-system emacs-build-system)
+    (home-page
+      "https://github.com/sachac/artbollocks-mode")
+    (synopsis
+      "Improve your writing (especially about art)")
+    (description
+      "Usage
+
+To use, save artbollocks-mode.el to a directory in your load-path.
+
+(require 'artbollocks-mode)
+(add-hook 'text-mode-hook 'artbollocks-mode)
+
+or
+
+M-x artbollocks-mode
+
+NOTE: If you manually turn on artbollocks-mode,
+you you might need to force re-fontification initially:
+
+  M-x font-lock-fontify-buffer
+")
+    (license #f)))
+
 (define-public emacs-hyperbole
   (package
     (name "emacs-hyperbole")
@@ -150,30 +237,7 @@ disables/inhibits support.\"
     (synopsis
       "Disable arrow keys + optionally backspace and return")
     (description
-      "Entering hardcore-mode will disable arrow keys, backspace and return.
-
-* Use C-f/b/p/n instead of right/left/up/down
-* Use C-h instead of backspace
-* Use C-m or C-j instead of return
-
-To use C-h instead of backspace, you might need to redefine C-h:
-
-    ;; Use shell-like backspace C-h, rebind help to F1
-    (define-key key-translation-map [?\\C-h] [?\\C-?])
-    (global-set-key (kbd \"<f1>\") 'help-command)
-
-If hardcore-mode is too hardcore for you, you can add these before
-you require the mode:
-
-    (setq too-hardcore-backspace t)
-    (setq too-hardcore-return t)
-    (require 'hardcore-mode)
-    (global-hardcore-mode)
-
-These are the settings I am using at the time. Still not hardcore enough. ^^
-
-Code:
-")
+     #f)
     (license #f)))
 
 ;; emacs-srfi
@@ -196,224 +260,7 @@ Code:
     (home-page "https://github.com/joodland/bm")
     (synopsis "Visible bookmarks in buffer.")
     (description
-      "Description:
-
-  This package was created because I missed the bookmarks from M$
-  Visual Studio. I find that they provide an easy way to navigate
-  in a buffer.
-
-  bm.el provides visible, buffer local, bookmarks and the ability
-  to jump forward and backward to the next bookmark.
-
-  Features:
-   - Toggle bookmarks with `bm-toggle' and navigate forward and
-     backward in buffer with `bm-next' and `bm-previous'.
-
-   - Different wrapping modes, see `bm-wrap-search' and
-     `bm-wrap-immediately'. Use `bm-toggle-wrapping' to turn
-     wrapping on/off. Wrapping is only available when
-     `bm-cycle-all-buffers' is nil.
-
-   - Navigate between bookmarks only in current buffer or cycle
-     through all buffers. Use `bm-cycle-all-buffers' to enable
-     looking for bookmarks across all open buffers. When cycling
-     through bookmarks in all open buffers, the search will always
-     wrap around.
-
-   - Setting bookmarks based on a regexp, see `bm-bookmark-regexp'
-     and `bm-bookmark-regexp-region'.
-
-   - Setting bookmark based on line number, see `bm-bookmark-line'.
-
-   - Goto line position or start of line, see `bm-goto-position'.
-
-   - Persistent bookmarks (see below). Use
-     `bm-toggle-buffer-persistence' to enable/disable persistent
-     bookmarks (buffer local).
-
-   - List bookmarks with annotations and context in a separate
-     buffer, see `bm-show' (current buffer) and `bm-show-all' (all
-     open buffers). See `bm-show-mode-map' for key bindings.
-
-   - Remove all bookmarks in current buffer with
-     `bm-remove-all-current-buffer' and all bookmarks in all open
-     buffers with `bm-remove-all-all-buffers'.
-
-   - Annotate bookmarks, see `bm-bookmark-annotate' and
-     `bm-bookmark-show-annotation'. The annotation is displayed in
-     the message area when navigating to a bookmark. Set the
-     variable `bm-annotate-on-create' to t to be prompted for an
-     annotation when bookmark is created.
-
-   - Different bookmark styles, fringe-only, line-only or both, see
-     `bm-highlight-style'. It is possible to have fringe-markers on
-     left or right side.
-
-   - Display the number of bookmarks in the current buffer in the
-     mode line, see `bm-modeline-info' and
-     `bm-modeline-display-total'.
-
-
-Known limitations:
-
-  This package is developed and tested on GNU Emacs 26.x. It should
-  also work on all GNU Emacs newer than version 21.x.
-
-  There are some incompatibilities with lazy-lock when using
-  fill-paragraph. All bookmark below the paragraph being filled
-  will be lost. This issue can be resolved using the
-  `jit-lock-mode' introduced in GNU Emacs 21.1
-
-
-
-Installation:
-
-  To use bm.el, put it in your load-path and add
-  the following to your .emacs
-
-  (require 'bm)
-
-or
-
-  (autoload 'bm-toggle   \"bm\" \"Toggle bookmark in current buffer.\" t)
-  (autoload 'bm-next     \"bm\" \"Goto bookmark.\"                     t)
-  (autoload 'bm-previous \"bm\" \"Goto previous bookmark.\"            t)
-
-
-
-Configuration:
-
-  To make it easier to use, assign the commands to some keys.
-
-  M$ Visual Studio key setup.
-    (global-set-key (kbd \"<C-f2>\") 'bm-toggle)
-    (global-set-key (kbd \"<f2>\")   'bm-next)
-    (global-set-key (kbd \"<S-f2>\") 'bm-previous)
-
-  Click on fringe to toggle bookmarks, and use mouse wheel to move
-  between them.
-    (global-set-key (kbd \"<left-fringe> <mouse-5>\") 'bm-next-mouse)
-    (global-set-key (kbd \"<left-fringe> <mouse-4>\") 'bm-previous-mouse)
-    (global-set-key (kbd \"<left-fringe> <mouse-1>\") 'bm-toggle-mouse)
-
-  If you would like the markers on the right fringe instead of the
-  left, add the following to line:
-
-  (setq bm-marker 'bm-marker-right)
-
-
-  Mode line:
-
-  Since there are number of different packages that helps with
-  configuring the mode line, it is hard to provide integrations.
-  Below is two examples on how to add it to the standard Emacs mode
-  line:
-
-    (add-to-list 'mode-line-position '(:eval (bm-modeline-info)) t)
-
-  or
-
-    (setq global-mode-string '(:eval (bm-modeline-info)))
-
-
-
-
-Persistence:
-
-  Bookmark persistence is achieved by storing bookmark data in a
-  repository when a buffer is killed. The repository is saved to
-  disk on exit. See `bm-repository-file'. The maximum size of the
-  repository is controlled by `bm-repository-size'.
-
-  The buffer local variable `bm-buffer-persistence' decides if
-  bookmarks in a buffer is persistent or not. Non-file buffers
-  can't have persistent bookmarks, except for *info* and
-  indirect buffers.
-
-  Bookmarks are non-persistent as default. To have bookmarks
-  persistent as default add the following line to .emacs.
-
-  ;; make bookmarks persistent as default
-  (setq-default bm-buffer-persistence t)
-
-  Use the function `bm-toggle-buffer-persistence' to toggle
-  bookmark persistence.
-
-  To have automagic bookmark persistence we need to add some
-  functions to the following hooks. Insert the following code
-  into your .emacs file:
-
-  If you are using desktop or other packages that restore buffers
-  on start up, bookmarks will not be restored. When using
-  `after-init-hook' to restore the repository, it will be restored
-  *after* .emacs is finished. To load the repository when bm is
-  loaded set the variable `bm-restore-repository-on-load' to t,
-  *before* loading bm (and don't use the `after-init-hook').
-
-  ;; Make sure the repository is loaded as early as possible
-  (setq bm-restore-repository-on-load t)
-  (require 'bm)
-
-  ;; Loading the repository from file when on start up.
-  (add-hook' after-init-hook 'bm-repository-load)
-
-  ;; Restoring bookmarks when on file find.
-  (add-hook 'find-file-hooks 'bm-buffer-restore)
-
-  ;; Saving bookmark data on killing a buffer
-  (add-hook 'kill-buffer-hook 'bm-buffer-save)
-
-  ;; Saving the repository to file when on exit.
-  ;; kill-buffer-hook is not called when Emacs is killed, so we
-  ;; must save all bookmarks first.
-  (add-hook 'kill-emacs-hook '(lambda nil
-                                  (bm-buffer-save-all)
-                                  (bm-repository-save)))
-
-  ;; Update bookmark repository when saving the file.
-  (add-hook 'after-save-hook 'bm-buffer-save)
-
-  ;; Restore bookmarks when buffer is reverted.
-  (add-hook 'after-revert-hook 'bm-buffer-restore)
-
-
-  The `after-save-hook' and `after-revert-hook' is not necessary to
-  use to achieve persistence, but it makes the bookmark data in
-  repository more in sync with the file state.
-
-  The `after-revert-hook' might cause trouble when using packages
-  that automatically reverts the buffer (like vc after a check-in).
-  This can easily be avoided if the package provides a hook that is
-  called before the buffer is reverted (like `vc-before-checkin-hook').
-  Then new bookmarks can be saved before the buffer is reverted.
-
-  ;; make sure bookmarks is saved before check-in (and revert-buffer)
-  (add-hook 'vc-before-checkin-hook 'bm-buffer-save)
-
-
-
-Acknowledgements:
-
- - The use of overlays for bookmarks was inspired by highline.el by
-   Vinicius Jose Latorre <vinicius(at)cpqd.com.br>.
- - Thanks to Peter Heslin for notifying me on the incompability
-   with lazy-lock.
- - Thanks to Christoph Conrad for adding support for goto line
-   position in bookmarks and simpler wrapping.
- - Thanks to Jan Rehders for adding support for different bookmark
- - styles.
- - Thanks to Dan McKinley <mcfunley(at)gmail.com> for inspiration
-   to add support for listing bookmarks in all buffers,
-   `bm-show-all'. (http://www.emacswiki.org/cgi-bin/wiki/bm-ext.el)
- - Thanks to Jonathan Kotta <jpkotta(at)gmail.com> for mouse
-   support and fringe markers on left or right side.
- - Thanks to Juanma Barranquero <lekktu(at)gmail.com> for making
-   `bm-show' an electric window, cleaning up the code, finding and
-   fixing bugs and correcting spelling errors.
- - Thanks to jixiuf <jixiuf(at)gmail.com> for adding LIFO support
-   to bookmark navigation. See `bm-in-lifo-order' for more
-   information.
-")
+     #f)
     (license #f)))
 
 (define-public emacs-ts
@@ -436,29 +283,7 @@ Acknowledgements:
     (home-page "http://github.com/alphapapa/ts.el")
     (synopsis "Timestamp and date/time library")
     (description
-      "This package is designed to ease manipulation of dates, times, and
-timestamps in Emacs.
-
-A struct `ts' is defined, which represents a timestamp.  All
-manipulation is done internally using Unix timestamps.  Accessors
-are used to retrieve values such as month, day, year, etc. from a
-timestamp, and these values are cached in the struct once accessed,
-to avoid repeatedly calling `format-time-string', which is
-expensive.  Function arguments are designed to work well with the
-`thread-last' macro, to make sequential operations easy to follow.
-
-The current timestamp is retrieved with `ts-now'.
-
-Timestamps are easily modified using `ts-adjust', `ts-apply',
-`ts-incf', `ts-dec', etc.
-
-Timestamps are parsed and formatted using `ts-parse',
-`ts-parse-org', and `ts-format'.
-
-Differences and durations are calculated with `ts-diff',
-`ts-human-duration', and `ts-human-format-duration'.  Comparisons
-are done with `ts<', `ts<=', `ts=', `ts>', and `ts>='.
-")
+     #f)
     (license #f)))
 
 ;; (define-public emacs-ts
@@ -1151,43 +976,6 @@ global-hungry-delete-mode.
 more efficient.")
    (license license:gpl3+)))
 
-(define-public emacs-dired-git-info
-  (package
-    (name "emacs-dired-git-info")
-    (version "0.3.1")
-    (source
-      (origin
-        (method url-fetch)
-        (uri (string-append
-               "https://elpa.gnu.org/packages/dired-git-info-"
-               version
-               ".el"))
-        (sha256
-          (base32
-            "1kd0rpw7l32wvwi7q8s0inx4bc66xrl7hkllnlicyczsnzw2z52z"))))
-    (build-system emacs-build-system)
-    (home-page
-      "https://github.com/clemera/dired-git-info")
-    (synopsis "Show git info in dired")
-    (description
-      "Shows git information inside the dired buffer.")
-    (license license:gpl3+)))
-
-(define-public emacs-which-key-next
-  (package
-   (inherit emacs-which-key)
-   (name "emacs-which-key-next")
-   (version "9ff54ff")
-   (source
-    (origin
-     (method git-fetch)
-     (uri (git-reference
-           (url "https://github.com/justbur/emacs-which-key.git")
-           (commit version)))
-     (file-name (git-file-name name version))
-     (sha256
-      (base32 "0pai03rg5s043snqisfniy24cz68g30mbsbcb07gllsnqh6gv075"))))))
-
 (define-public emacs-hercules-next
   (package
    (inherit emacs-hercules)
@@ -1203,7 +991,7 @@ more efficient.")
      (sha256
       (base32
        "0snfmvri4cpmhrk5s4hxxlyzs3d58ysmqzaiyiz4979admdc1lmb"))))
-   (propagated-inputs `(("emacs-which-key-next" ,emacs-which-key-next)))))
+   (propagated-inputs `(("emacs-which-key" ,emacs-which-key)))))
 
 (define-public emacs-piper
   (package

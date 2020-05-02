@@ -32,7 +32,9 @@
   #:use-module (guix build-system qt)
   #:use-module (guix build-system perl)
   #:use-module (guix build-system copy)
+  #:use-module (guix build-system cargo)
   #:use-module (gnu packages qt)
+  
   #:use-module (gnu packages libbsd)
   #:use-module (gnu packages linux)
   #:use-module (gnu packages emacs-xyz)
@@ -101,19 +103,192 @@
   #:use-module (gnu packages pkg-config)
   #:use-module (gnu packages bison)
   #:use-module (gnu packages autogen)
-  
   #:use-module (gnu packages build-tools)
   #:use-module (gnu packages ncurses)
+  #:use-module (gnu packages crates-io)
   )
 
 ;; Wishlist
 ;;
+;; https://www.nongnu.org/renameutils/
+;; https://github.com/ngirard/lolcate-rs
 ;; https://github.com/sharkdp/bat
 ;; https://github.com/Ventto/mons
 ;; https://sourceforge.net/projects/narocad/
 ;; http://solvespace.com/index.pl
 ;; https://github.com/lpereira/hardinfo
 ;; (define-public dracut)
+
+(define-public rust-lz4-sys
+  (package
+    (name "rust-lz4-sys")
+    (version "1.8.3")
+    (source
+      (origin
+        (method url-fetch)
+        (uri (crate-uri "lz4-sys" version))
+        (file-name
+          (string-append name "-" version ".tar.gz"))
+        (sha256
+          (base32
+            "1znsrhpkl8bg4sw3fs5cb3haqnq8k1mxvb3ksdc1qcz948l05ar0"))))
+    (build-system cargo-build-system)
+    (arguments
+      `(#:cargo-inputs
+        (("rust-libc" ,rust-libc-0.2))
+        #:cargo-development-inputs
+        (("rust-cc" ,rust-cc-1.0))))
+    (home-page "https://github.com/bozaro/lz4-rs")
+    (synopsis "Rust LZ4 sys package.")
+    (description "Rust LZ4 sys package.")
+    (license license:expat)))
+
+(define-public rust-lz4
+  (package
+    (name "rust-lz4")
+    (version "1.23.1")
+    (source
+      (origin
+        (method url-fetch)
+        (uri (crate-uri "lz4" version))
+        (file-name
+          (string-append name "-" version ".tar.gz"))
+        (sha256
+          (base32
+            "1m93vh4pvwi7b7r4zdhd5gclrnwi88ywj302fgrif05616glmja3"))))
+    (build-system cargo-build-system)
+    (arguments
+      `(#:cargo-inputs
+        (("rust-libc" ,rust-libc-0.2)
+         ("rust-lz4-sys" ,rust-lz4-sys))
+        #:cargo-development-inputs
+        (("rust-rand" ,rust-rand-0.7)
+         ("rust-skeptic" ,rust-skeptic-0.13))))
+    (home-page "https://github.com/bozaro/lz4-rs")
+    (synopsis "Rust LZ4 bindings library.")
+    (description "Rust LZ4 bindings library.")
+    (license license:expat)))
+
+(define-public rust-pwd
+  (package
+    (name "rust-pwd")
+    (version "1.3.0")
+    (source
+      (origin
+        (method url-fetch)
+        (uri (crate-uri "pwd" version))
+        (file-name
+          (string-append name "-" version ".tar.gz"))
+        (sha256
+          (base32
+            "1986a618ginghg9w485vvbncs1yi9rqiw990r92f2276xj5jvlsx"))))
+    (build-system cargo-build-system)
+    (arguments
+      `(#:cargo-inputs
+        (("rust-failure" ,rust-failure-0.1)
+         ("rust-libc" ,rust-libc-0.2))))
+    (home-page "https://gitlab.com/pwoolcoc/pwd.git")
+    (synopsis "Safe interface to pwd.h
+")
+    (description "Safe interface to pwd.h
+")
+    (license (list license:expat license:asl2.0))))
+
+(define-public rust-expanduser
+  (package
+    (name "rust-expanduser")
+    (version "1.2.1")
+    (source
+      (origin
+        (method url-fetch)
+        (uri (crate-uri "expanduser" version))
+        (file-name
+          (string-append name "-" version ".tar.gz"))
+        (sha256
+          (base32
+            "15481l2pg6bxcvrkplgvidl18ap61i5k2r8j6zck7850vp4cissi"))))
+    (build-system cargo-build-system)
+    (arguments
+      `(#:cargo-inputs
+        (("rust-dirs" ,rust-dirs-2.0)
+         ("rust-lazy-static" ,rust-lazy-static-1)
+         ("rust-pwd" ,rust-pwd))))
+    (home-page
+      "https://gitlab.com/pwoolcoc/expanduser")
+    (synopsis
+      "attempts to expand ~ and ~user while creating a filesystem path
+")
+    (description
+      "attempts to expand ~ and ~user while creating a filesystem path
+")
+    (license license:agpl3)))
+
+(define-public rust-lolcate-rs
+  (package
+    (name "rust-lolcate-rs")
+    (version "0.5.0")
+    (source
+      (origin
+        (method url-fetch)
+        (uri (crate-uri "lolcate-rs" version))
+        (file-name
+          (string-append name "-" version ".tar.gz"))
+        (sha256
+          (base32
+            "19r46lapypmxl3fakfp9b03abhl4gx4h9l7p7f28zqyvmkk92fh5"))))
+    (build-system cargo-build-system)
+    (arguments
+      `(#:cargo-inputs
+        (("rust-clap" ,rust-clap-2)
+         ("rust-dirs" ,rust-dirs-2.0)
+         ("rust-expanduser" ,rust-expanduser)
+         ("rust-ignore" ,rust-ignore-0.4)
+         ("rust-lazy-static" ,rust-lazy-static-1)
+         ("rust-lz4" ,rust-lz4)
+         ("rust-regex" ,rust-regex-1.3)
+         ("rust-serde" ,rust-serde-1.0)
+         ("rust-serde-derive" ,rust-serde-derive-1.0)
+         ("rust-termcolor" ,rust-termcolor-1.0)
+         ("rust-toml" ,rust-toml-0.5)
+         ("rust-walkdir" ,rust-walkdir-2.2))))
+    (home-page
+      "https://github.com/ngirard/lolcate-rs")
+    (synopsis
+      "A comically fast way of indexing and querying your filesystem. Replaces locate / mlocate / updatedb.")
+    (description
+      "This package provides a comically fast way of indexing and querying your filesystem.  Replaces locate / mlocate / updatedb.")
+    (license license:gpl3)))
+
+;; (define-public lolcate
+;;   (package
+;;     (name "lolcate")
+;;     (version "0.6.0pre6")
+;;     (source
+;;      (origin
+;;      (method git-fetch)
+;;      (uri (git-reference (url "https://github.com/ngirard/lolcate-rs.git")
+;;                          (commit (string-append "v" version))))
+;;      (sha256 (base32 ""))
+;;      (file-name (git-file-name name version))))
+;;     (build-system rust-build-system)
+;;     (inputs `(("xinit" ,xinit)
+;;               ("ncurses" ,ncurses)
+;;               ("bash" ,bash-minimal)))
+;;     (arguments `(#:make-flags (list
+;;                                (string-append "PREFIX=")
+;;                                (string-append "DESTDIR=" (assoc-ref %outputs "out"))
+;;                                (string-append "SH=" (assoc-ref %build-inputs "bash")))
+;;                  #:phases (modify-phases %standard-phases
+;;                             (delete 'configure)
+;;                             (delete 'check)
+;;                             ;; the install phase fails, and needed for manpage
+;;                             (delete 'install)
+;;                             )))
+;;     (synopsis "Also called console-tdm. A simple login manager forked from CDM.")
+;;     (home-page "")
+;;     (description "")
+;;     (license license:gpl3)
+;;     ))
 
 (define-public tdm
   (package
