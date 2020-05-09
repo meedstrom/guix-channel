@@ -362,7 +362,7 @@ disables/inhibits support.\"
                ".tar"))
         (sha256
           (base32
-            "028s33z142ivrb19xm63zgmjdznpz1h2z2a41wxiy5bwx1fbyyp1"))))
+            "0s3nmahbac6gzpwd9ln799x0bgf3x5d256l440gjrhs3gayy99w3"))))
     (build-system emacs-build-system)
     (home-page
       "https://github.com/stan-dev/stan-mode/tree/master/stan-mode")
@@ -379,6 +379,7 @@ Usage:
   (require 'stan-mode)
 ")
     (license #f)))
+
 
 (define-public emacs-nadvice
   (package

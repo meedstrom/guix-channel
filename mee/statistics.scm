@@ -185,16 +185,17 @@ shared library, or the legacy 3.14/3.15 branch of V8.")
 (define-public emacs-ess-next
   (package
    (name "emacs-ess-next")
-   (version "18.10.3snapshot") ;; what it says in ./VERSION
+   (version "18.10.3snapshot") ;; from ./VERSION as of 2020 on master
    (source (origin
             (method git-fetch)
             (uri (git-reference (url "https://github.com/emacs-ess/ESS/")
-                                (commit "1c2387fdba509c1c9d072150f65ccc318a570870")))
+                                (commit "2e7d36d")))
             (sha256
-             (base32 "0llsjqrvabcvpd2nhixiklwmm2lisywif77iwfrsdc6lfxp8cdd0"))
+             (base32 "1kjpgspjpipirc48acb3d6bfsrmd8yrz35ck1sx0id7y8nni1d8k"))
             (modules '((guix build utils)))
             (snippet
              '(begin
+
                 ;; Stop ESS from trying to fetch an external julia-mode.el.
                 (substitute* "lisp/Makefile"
                              (("JULIAS := julia-mode.el julia-mode-latexsubs.el") "")
@@ -212,6 +213,7 @@ shared library, or the legacy 3.14/3.15 branch of V8.")
                              (("julia:") "")
                              (("@\\$.MAKE. -C .. julia") "")
                              )
+
                 ;; test fails: "R not running"
                 (substitute* "test/run-tests"
                              (("\\(load \\(expand-file-name \"ess-test-org.el\" ess-test-path\\) nil t\\)") ""))

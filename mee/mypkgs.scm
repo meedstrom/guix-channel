@@ -27,6 +27,7 @@
   #:use-module (guix build-system python)
   #:use-module (guix build-system go)
   #:use-module (guix build-system haskell)
+  #:use-module (guix build-system cmake)
   #:use-module (guix build-system node)
   #:use-module (guix build-system r)
   #:use-module (guix build-system qt)
@@ -118,6 +119,54 @@
 ;; http://solvespace.com/index.pl
 ;; https://github.com/lpereira/hardinfo
 ;; (define-public dracut)
+
+;; (define-public chemacs
+;;   (package
+;;    (name "chemacs")
+;;    (version "0.0-guix1")
+;;    (source
+;;     (origin
+;;      (method git-fetch)
+;;      (uri (git-reference (url "https://github.com/plexus/chemacs.git")
+;;                          (commit "233bb7f")))
+;;      (sha256 (base32 ""))
+;;      (file-name (git-file-name name version))))))
+
+(define-public adwaita-qt
+  (package
+   (name "adwaita-qt")
+   (version "1.1.1")
+   (source
+    (origin
+     (method git-fetch)
+     (uri (git-reference (url "https://github.com/FedoraQt/adwaita-qt")
+                         (commit version)))
+     (sha256 (base32 "1z1zl6b1190nffcdyjnwz2xy4s6cvgd98aas9z71l5iddwzy32fm"))
+     (file-name (git-file-name name version))))
+   (build-system cmake-build-system)
+   (arguments
+    '(#:tests? #f
+      #:phases
+      (modify-phases %standard-phases
+                     (add-after 'unpack 'fix-env
+                                (lambda _
+                                  (setenv "QT_PLUGINS_DIR"
+                                          (string-append (assoc-ref %outputs "out")
+                                                         "/lib/qt5/plugins"))
+                                  (mkdir-p (getenv "QT_PLUGINS_DIR"))
+                                  #t))
+                     (add-before 'install 'fix-env-again
+                                (lambda _
+                                  (setenv "QT_PLUGINS_DIR"
+                                          (string-append (assoc-ref %outputs "out")
+                                                         "/lib/qt5/plugins"))
+                                  (mkdir-p (getenv "QT_PLUGINS_DIR"))
+                                  #t)))))
+   (inputs `(("qtbase" ,qtbase)))
+   (home-page "")
+   (synopsis "")
+   (description "")
+   (license #f)))
 
 (define-public rust-lz4-sys
   (package
