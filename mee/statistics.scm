@@ -189,13 +189,12 @@ shared library, or the legacy 3.14/3.15 branch of V8.")
    (source (origin
             (method git-fetch)
             (uri (git-reference (url "https://github.com/emacs-ess/ESS/")
-                                (commit "2e7d36d")))
+                                (commit "1c2387fdba509c1c9d072150f65ccc318a570870")))
             (sha256
-             (base32 "1kjpgspjpipirc48acb3d6bfsrmd8yrz35ck1sx0id7y8nni1d8k"))
+             (base32 "0llsjqrvabcvpd2nhixiklwmm2lisywif77iwfrsdc6lfxp8cdd0"))
             (modules '((guix build utils)))
             (snippet
              '(begin
-
                 ;; Stop ESS from trying to fetch an external julia-mode.el.
                 (substitute* "lisp/Makefile"
                              (("JULIAS := julia-mode.el julia-mode-latexsubs.el") "")
@@ -751,6 +750,44 @@ various statistical analysis programs such as R, Julia, and JAGS.")
 ;; =============================================================================
 ;; TIDYMODELS & DEPENDENCIES
 ;; custom: tidyposterior (see comments)
+
+(define-public r-recipes
+  (package
+    (name "r-recipes")
+    (version "0.1.12")
+    (source
+      (origin
+        (method url-fetch)
+        (uri (cran-uri "recipes" version))
+        (sha256
+          (base32
+            "0hbnrqgzazg401nk5fhljif7wnspicki179qf215r34y9wm8g3xj"))))
+    (properties `((upstream-name . "recipes")))
+    (build-system r-build-system)
+    (propagated-inputs
+      `(("r-dplyr" ,r-dplyr)
+        ("r-generics" ,r-generics)
+        ("r-glue" ,r-glue)
+        ("r-gower" ,r-gower)
+        ("r-ipred" ,r-ipred)
+        ("r-lubridate" ,r-lubridate)
+        ("r-magrittr" ,r-magrittr)
+        ("r-matrix" ,r-matrix)
+        ("r-purrr" ,r-purrr)
+        ("r-rlang" ,r-rlang)
+        ("r-tibble" ,r-tibble)
+        ("r-tidyr" ,r-tidyr)
+        ("r-tidyselect" ,r-tidyselect)
+        ("r-timedate" ,r-timedate)
+        ("r-withr" ,r-withr)))
+    (native-inputs `(("r-knitr" ,r-knitr)))
+    (home-page
+      "https://github.com/tidymodels/recipes")
+    (synopsis
+      "Preprocessing Tools to Create Design Matrices")
+    (description
+      "An extensible framework to create and preprocess design matrices.  Recipes consist of one or more data manipulation and analysis \"steps\".  Statistical parameters for the steps can be estimated from an initial data set and then applied to other data sets.  The resulting design matrices can then be used as inputs into statistical or machine learning models.")
+    (license gpl2)))
 
 (define-public r-gpfit
   (package
