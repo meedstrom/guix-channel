@@ -35,7 +35,6 @@
   #:use-module (guix build-system copy)
   #:use-module (guix build-system cargo)
   #:use-module (gnu packages qt)
-  
   #:use-module (gnu packages libbsd)
   #:use-module (gnu packages linux)
   #:use-module (gnu packages emacs-xyz)
@@ -51,6 +50,7 @@
   #:use-module (gnu packages video)
   #:use-module (gnu packages boost)
   #:use-module (gnu packages python)
+  #:use-module (gnu packages python-crypto)
   #:use-module (gnu packages python-web)
   #:use-module (gnu packages python-xyz)
   #:use-module (gnu packages check)
@@ -98,6 +98,7 @@
   #:use-module (gnu packages mono)
   #:use-module (gnu packages mail)
   #:use-module (gnu packages wget)
+  #:use-module (gnu packages time)
   #:use-module (gnu packages ruby)
   #:use-module (gnu packages gettext)
   #:use-module (gnu packages m4)
@@ -131,6 +132,30 @@
 ;;                          (commit "233bb7f")))
 ;;      (sha256 (base32 ""))
 ;;      (file-name (git-file-name name version))))))
+
+(define-public svtplay-dl
+  (let ((commit "81cb18f"))
+    (package
+     (name "svtplay-dl")
+     (version (git-version "2.4" "0" commit))
+     (source
+      (origin
+       (method git-fetch)
+       (uri (git-reference (url "https://github.com/spaam/svtplay-dl.git")
+                           (commit commit)))
+       (sha256 (base32 "03l6r5rzjljrj81icqlgndfzvp9hbm04m56qi3aphlwym6diiab7"))
+       (file-name (git-file-name name version))))
+     (build-system python-build-system)
+     (inputs `(("python-cryptography" ,python-cryptography)
+               ("python-pyyaml" ,python-pyyaml)
+               ("python-requests" ,python-requests)
+               ("python-pysocks" ,python-pysocks)
+               ("python-dateutil" ,python-dateutil)
+               ("ffmpeg" ,ffmpeg)))
+     (home-page "https://svtplay-dl.se/")
+     (synopsis "Similar to youtube-dl, but for a number of Scandinavian websites.")
+     (description synopsis)
+     (license license:expat))))
 
 (define-public adwaita-qt
   (package

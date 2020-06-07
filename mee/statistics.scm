@@ -47,7 +47,7 @@
 (define-public r-minimal-mee1
   (package
     (inherit (@ (gnu packages statistics) r-minimal))
-    (version "3.6.3-mee1")
+    (version "4-mee1")
     (inputs `(("gfortran" ,gfortran-9)
               ,@(alist-delete "gfortran"
                               (package-inputs (@ (gnu packages statistics) r-minimal)))))))
@@ -55,7 +55,7 @@
 (define-public r-mee1
   (package
     (inherit (@ (gnu packages statistics) r))
-    (version "3.6.3-mee1")
+    (version "4-mee1")
     (inputs `(("r-minimal" ,r-minimal-mee1)
               ,@(alist-delete "r-minimal"
                               (package-inputs (@ (gnu packages statistics) r)))))))
@@ -751,44 +751,6 @@ various statistical analysis programs such as R, Julia, and JAGS.")
 ;; TIDYMODELS & DEPENDENCIES
 ;; custom: tidyposterior (see comments)
 
-(define-public r-recipes
-  (package
-    (name "r-recipes")
-    (version "0.1.12")
-    (source
-      (origin
-        (method url-fetch)
-        (uri (cran-uri "recipes" version))
-        (sha256
-          (base32
-            "0hbnrqgzazg401nk5fhljif7wnspicki179qf215r34y9wm8g3xj"))))
-    (properties `((upstream-name . "recipes")))
-    (build-system r-build-system)
-    (propagated-inputs
-      `(("r-dplyr" ,r-dplyr)
-        ("r-generics" ,r-generics)
-        ("r-glue" ,r-glue)
-        ("r-gower" ,r-gower)
-        ("r-ipred" ,r-ipred)
-        ("r-lubridate" ,r-lubridate)
-        ("r-magrittr" ,r-magrittr)
-        ("r-matrix" ,r-matrix)
-        ("r-purrr" ,r-purrr)
-        ("r-rlang" ,r-rlang)
-        ("r-tibble" ,r-tibble)
-        ("r-tidyr" ,r-tidyr)
-        ("r-tidyselect" ,r-tidyselect)
-        ("r-timedate" ,r-timedate)
-        ("r-withr" ,r-withr)))
-    (native-inputs `(("r-knitr" ,r-knitr)))
-    (home-page
-      "https://github.com/tidymodels/recipes")
-    (synopsis
-      "Preprocessing Tools to Create Design Matrices")
-    (description
-      "An extensible framework to create and preprocess design matrices.  Recipes consist of one or more data manipulation and analysis \"steps\".  Statistical parameters for the steps can be estimated from an initial data set and then applied to other data sets.  The resulting design matrices can then be used as inputs into statistical or machine learning models.")
-    (license gpl2)))
-
 (define-public r-gpfit
   (package
     (name "r-gpfit")
@@ -814,14 +776,14 @@ various statistical analysis programs such as R, Julia, and JAGS.")
 (define-public r-hardhat
   (package
     (name "r-hardhat")
-    (version "0.1.1")
+    (version "0.1.3")
     (source
       (origin
         (method url-fetch)
         (uri (cran-uri "hardhat" version))
         (sha256
           (base32
-            "06l4zcqz76c2m9lxa5d6wqcbq1xkkxk0wynka09y5fyh9q82c0g6"))))
+            "10x8fw0skaqci03v2qqpbradbra9arm3s5pskcwm4wricd2imr40"))))
     (properties `((upstream-name . "hardhat")))
     (build-system r-build-system)
     (propagated-inputs
@@ -829,6 +791,7 @@ various statistical analysis programs such as R, Julia, and JAGS.")
         ("r-rlang" ,r-rlang)
         ("r-tibble" ,r-tibble)
         ("r-vctrs" ,r-vctrs)))
+    (native-inputs `(("r-knitr" ,r-knitr)))
     (home-page
       "https://github.com/tidymodels/hardhat")
     (synopsis "Construct Modeling Packages")
@@ -926,25 +889,27 @@ various statistical analysis programs such as R, Julia, and JAGS.")
 (define-public r-dials
   (package
     (name "r-dials")
-    (version "0.0.4")
+    (version "0.0.6")
     (source
       (origin
         (method url-fetch)
         (uri (cran-uri "dials" version))
         (sha256
           (base32
-            "04vz6spp8lw011a9fn8z0bkba9nghgj2hvsxy3n6dqqs3ajd4nfa"))))
+            "0hvhn8adkb8pywfh058vj681bccm4iyky11ijc01xk2w3iaslyr9"))))
     (properties `((upstream-name . "dials")))
     (build-system r-build-system)
     (propagated-inputs
       `(("r-dicedesign" ,r-dicedesign)
         ("r-dplyr" ,r-dplyr)
         ("r-glue" ,r-glue)
+        ("r-lifecycle" ,r-lifecycle)
         ("r-purrr" ,r-purrr)
         ("r-rlang" ,r-rlang)
         ("r-scales" ,r-scales)
         ("r-tibble" ,r-tibble)
         ("r-withr" ,r-withr)))
+    (native-inputs `(("r-knitr" ,r-knitr)))
     (home-page "https://tidymodels.github.io/dials")
     (synopsis
       "Tools for Creating Tuning Parameter Values")
@@ -955,14 +920,14 @@ various statistical analysis programs such as R, Julia, and JAGS.")
 (define-public r-workflows
   (package
     (name "r-workflows")
-    (version "0.1.0")
+    (version "0.1.1")
     (source
       (origin
         (method url-fetch)
         (uri (cran-uri "workflows" version))
         (sha256
           (base32
-            "1vmjlfyjavvz0677832cvn296xwk5rkv0jr4cncganadh2yjqa1d"))))
+            "14lzbszz7ybfzqa5zw1hfh81b8rbwwyza6x8nhpnknl6x4adqfql"))))
     (properties `((upstream-name . "workflows")))
     (build-system r-build-system)
     (propagated-inputs
@@ -973,6 +938,7 @@ various statistical analysis programs such as R, Julia, and JAGS.")
         ("r-hardhat" ,r-hardhat)
         ("r-parsnip" ,r-parsnip)
         ("r-rlang" ,r-rlang)))
+    (native-inputs `(("r-knitr" ,r-knitr)))
     (home-page
       "https://github.com/tidymodels/workflows")
     (synopsis "Modeling Workflows")
@@ -1108,14 +1074,14 @@ various statistical analysis programs such as R, Julia, and JAGS.")
 (define-public r-tidytext
   (package
     (name "r-tidytext")
-    (version "0.2.2")
+    (version "0.2.4")
     (source
       (origin
         (method url-fetch)
         (uri (cran-uri "tidytext" version))
         (sha256
           (base32
-            "1h1fpy86fha3jidb1xz0n3mfn7110mmf3dz9hpyfczqpyd62k3qq"))))
+            "0gck3f039qkpkwn92jlyfan76w0xydg17bh6nsg9qlba7c35kzs6"))))
     (properties `((upstream-name . "tidytext")))
     (build-system r-build-system)
     (propagated-inputs
@@ -1129,6 +1095,7 @@ various statistical analysis programs such as R, Julia, and JAGS.")
         ("r-stopwords" ,r-stopwords)
         ("r-stringr" ,r-stringr)
         ("r-tokenizers" ,r-tokenizers)))
+    (native-inputs `(("r-knitr" ,r-knitr)))
     (home-page
       "http://github.com/juliasilge/tidytext")
     (synopsis
@@ -1140,14 +1107,14 @@ various statistical analysis programs such as R, Julia, and JAGS.")
 (define-public r-rsample
   (package
     (name "r-rsample")
-    (version "0.0.5")
+    (version "0.0.7")
     (source
       (origin
         (method url-fetch)
         (uri (cran-uri "rsample" version))
         (sha256
           (base32
-            "0lkwhydb8csg24zkpsblyykzfsjqr930h46kbpm2wk9kgygkfspd"))))
+            "0s6hgq0rcv3ianyidq3n9z34y5ww51gaggqkwmwns9yyxmwfjcm8"))))
     (properties `((upstream-name . "rsample")))
     (build-system r-build-system)
     (propagated-inputs
@@ -1158,9 +1125,10 @@ various statistical analysis programs such as R, Julia, and JAGS.")
         ("r-rlang" ,r-rlang)
         ("r-tibble" ,r-tibble)
         ("r-tidyr" ,r-tidyr)
-        ("r-tidyselect" ,r-tidyselect)))
-    (home-page
-      "https://tidymodels.github.io/rsample")
+        ("r-tidyselect" ,r-tidyselect)
+        ("r-vctrs" ,r-vctrs)))
+    (native-inputs `(("r-knitr" ,r-knitr)))
+    (home-page "https://rsample.tidymodels.org")
     (synopsis "General Resampling Infrastructure")
     (description
       "Classes and functions to create and summarize different types of resampling objects (e.g.  bootstrap, cross-validation).")
@@ -1169,14 +1137,14 @@ various statistical analysis programs such as R, Julia, and JAGS.")
 (define-public r-parsnip
   (package
     (name "r-parsnip")
-    (version "0.0.5")
+    (version "0.1.1")
     (source
       (origin
         (method url-fetch)
         (uri (cran-uri "parsnip" version))
         (sha256
           (base32
-            "1y3bkxkk1ib5p6zzz5js28n761rmxgws3rl1ravq37vk0h16bhg1"))))
+            "1p33absjd2lnq5aikr42him4b724qzxr1pzvdnazg789f763i47l"))))
     (properties `((upstream-name . "parsnip")))
     (build-system r-build-system)
     (propagated-inputs
@@ -1191,6 +1159,7 @@ various statistical analysis programs such as R, Julia, and JAGS.")
         ("r-tibble" ,r-tibble)
         ("r-tidyr" ,r-tidyr)
         ("r-vctrs" ,r-vctrs)))
+    (native-inputs `(("r-knitr" ,r-knitr)))
     (home-page
       "https://tidymodels.github.io/parsnip")
     (synopsis
@@ -1331,43 +1300,44 @@ various statistical analysis programs such as R, Julia, and JAGS.")
 
 (define-public r-brms
   (package
-  (name "r-brms")
-  (version "2.12.0")
-  (source
-    (origin
-      (method url-fetch)
-      (uri (cran-uri "brms" version))
-      (sha256
-        (base32
-          "1699lwkklfhjz7fddawlig552g2zvrc34mqwrzqjgl35r9fm08gs"))))
-  (properties `((upstream-name . "brms")))
-  (build-system r-build-system)
-  (propagated-inputs
-    `(("r-abind" ,r-abind)
-      ("r-backports" ,r-backports)
-      ("r-bayesplot" ,r-bayesplot)
-      ("r-bridgesampling" ,r-bridgesampling)
-      ("r-coda" ,r-coda)
-      ("r-future" ,r-future)
-      ("r-ggplot2" ,r-ggplot2)
-      ("r-glue" ,r-glue)
-      ("r-loo" ,r-loo)
-      ("r-matrix" ,r-matrix)
-      ("r-matrixstats" ,r-matrixstats)
-      ("r-mgcv" ,r-mgcv)
-      ("r-nleqslv" ,r-nleqslv)
-      ("r-nlme" ,r-nlme)
-      ("r-rcpp" ,r-rcpp)
-      ("r-rstan" ,r-rstan-mee1)
-      ("r-rstantools" ,r-rstantools)
-      ("r-shinystan" ,r-shinystan-mee1)))
-  (home-page
-    "https://github.com/paul-buerkner/brms")
-  (synopsis
-    "Bayesian Regression Models using 'Stan'")
-  (description
-    "Fit Bayesian generalized (non-)linear multivariate multilevel models using 'Stan' for full Bayesian inference.  A wide range of distributions and link functions are supported, allowing users to fit -- among others -- linear, robust linear, count data, survival, response times, ordinal, zero-inflated, hurdle, and even self-defined mixture models all in a multilevel context.  Further modeling options include non-linear and smooth terms, auto-correlation structures, censored data, meta-analytic standard errors, and quite a few more.  In addition, all parameters of the response distribution can be predicted in order to perform distributional regression.  Prior specifications are flexible and explicitly encourage users to apply prior distributions that actually reflect their beliefs.  Model fit can easily be assessed and compared with posterior predictive checks and leave-one-out cross-validation.  References: BÃ¼rkner (2017) <doi:10.18637/jss.v080.i01>; BÃ¼rkner (2018) <doi:10.32614/RJ-2018-017>; Carpenter et al. (2017) <doi:10.18637/jss.v076.i01>.")
-  (license gpl2)))
+    (name "r-brms")
+    (version "2.13.0")
+    (source
+      (origin
+        (method url-fetch)
+        (uri (cran-uri "brms" version))
+        (sha256
+          (base32
+            "0vdncdawxawi16f326qrgy9jjjipmqdjxh741y9p7xdzd4fwaxx3"))))
+    (properties `((upstream-name . "brms")))
+    (build-system r-build-system)
+    (propagated-inputs
+      `(("r-abind" ,r-abind)
+        ("r-backports" ,r-backports)
+        ("r-bayesplot" ,r-bayesplot)
+        ("r-bridgesampling" ,r-bridgesampling)
+        ("r-coda" ,r-coda)
+        ("r-future" ,r-future)
+        ("r-ggplot2" ,r-ggplot2)
+        ("r-glue" ,r-glue)
+        ("r-loo" ,r-loo)
+        ("r-matrix" ,r-matrix)
+        ("r-matrixstats" ,r-matrixstats)
+        ("r-mgcv" ,r-mgcv)
+        ("r-nleqslv" ,r-nleqslv)
+        ("r-nlme" ,r-nlme)
+        ("r-rcpp" ,r-rcpp)
+        ("r-rstan" ,r-rstan-mee1)
+        ("r-rstantools" ,r-rstantools)
+        ("r-shinystan" ,r-shinystan-mee1)))
+    (native-inputs `(("r-knitr" ,r-knitr)))
+    (home-page
+      "https://github.com/paul-buerkner/brms")
+    (synopsis
+      "Bayesian Regression Models using 'Stan'")
+    (description
+      "Fit Bayesian generalized (non-)linear multivariate multilevel models using 'Stan' for full Bayesian inference.  A wide range of distributions and link functions are supported, allowing users to fit -- among others -- linear, robust linear, count data, survival, response times, ordinal, zero-inflated, hurdle, and even self-defined mixture models all in a multilevel context.  Further modeling options include non-linear and smooth terms, auto-correlation structures, censored data, meta-analytic standard errors, and quite a few more.  In addition, all parameters of the response distribution can be predicted in order to perform distributional regression.  Prior specifications are flexible and explicitly encourage users to apply prior distributions that actually reflect their beliefs.  Model fit can easily be assessed and compared with posterior predictive checks and leave-one-out cross-validation.  References: B??rkner (2017) <doi:10.18637/jss.v080.i01>; B??rkner (2018) <doi:10.32614/RJ-2018-017>; Carpenter et al. (2017) <doi:10.18637/jss.v076.i01>.")
+    (license gpl2)))
 
 
 ;; =============================================================================

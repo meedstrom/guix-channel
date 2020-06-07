@@ -20,7 +20,34 @@
   #:use-module (guix git-download)
   #:use-module ((guix licenses) #:prefix license:)
   #:use-module (guix build-system emacs)
+  #:use-module (gnu packages linux)
+  #:use-module (srfi srfi-1)
+  #:use-module (guix utils)
+  #:use-module (gnu packages emacs)
   #:use-module (gnu packages emacs-xyz))
+
+
+(define-public emacs-no-x-toolkit
+  (let ((commit "4645430b9287c3f5ae9863d465a5dd4158e313a9")
+        (revision "0")
+        (emacs-version "28.0.50"))
+    (package
+     (inherit emacs-next)
+     (name "emacs-no-x-toolkit")
+     (version (git-version emacs-version revision commit))
+     (source (origin (inherit (package-source emacs-next))
+                     (uri (git-reference
+                           (url "https://git.savannah.gnu.org/git/emacs.git")
+                           (commit commit)))
+                     (sha256 (base32 "1fvffxz1pw894c6zhixkr7xdfps01h83jh18nyxx1v84hrr6smg5"))
+                     (file-name (git-file-name name version))
+                     ))
+     (inputs (append `(("inotify-tools" ,inotify-tools))
+                     (alist-delete "gtk+" (package-inputs emacs-next))))
+     (arguments
+      `(,@(substitute-keyword-arguments (package-arguments emacs-next)
+                                        ((#:configure-flags cf)
+                                         `(cons "--with-x-toolkit=no" ,cf))))))))
 
 ;; (define-public emacs-helm-core
 ;;   (package
