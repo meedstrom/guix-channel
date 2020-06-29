@@ -26,6 +26,26 @@
   #:use-module (gnu packages emacs)
   #:use-module (gnu packages emacs-xyz))
 
+(define-public emacs-explain-pause
+  (package
+    (name "emacs-explain-pause")
+    (version "d18eea75fb2433a901501e078ec5cd38bf97db19")
+    (source
+     (origin (method git-fetch)
+             (uri (git-reference (url "https://github.com/lastquestion/explain-pause-mode")
+                                 (commit version)))
+             (file-name (git-file-name name version))
+        (sha256
+          (base32
+           "1y9mqyjbsdrjh7f6lysypfwq232m6fwk7bq8vwkrg9fczkwjp9v4"))))
+    (build-system emacs-build-system)
+    (propagated-inputs
+      `(("emacs-dash" ,emacs-dash)))
+    (home-page "https://github.com/ch11ng/xelb")
+    (synopsis "X protocol Emacs Lisp Binding")
+    (description
+     #f)
+    (license license:gpl3+)))
 
 (define-public emacs-no-x-toolkit
   (let ((commit "4645430b9287c3f5ae9863d465a5dd4158e313a9")

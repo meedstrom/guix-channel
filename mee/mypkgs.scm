@@ -297,41 +297,41 @@
 ")
     (license license:agpl3)))
 
-(define-public rust-lolcate-rs
-  (package
-    (name "rust-lolcate-rs")
-    (version "0.5.0")
-    (source
-      (origin
-        (method url-fetch)
-        (uri (crate-uri "lolcate-rs" version))
-        (file-name
-          (string-append name "-" version ".tar.gz"))
-        (sha256
-          (base32
-            "19r46lapypmxl3fakfp9b03abhl4gx4h9l7p7f28zqyvmkk92fh5"))))
-    (build-system cargo-build-system)
-    (arguments
-      `(#:cargo-inputs
-        (("rust-clap" ,rust-clap-2)
-         ("rust-dirs" ,rust-dirs-2.0)
-         ("rust-expanduser" ,rust-expanduser)
-         ("rust-ignore" ,rust-ignore-0.4)
-         ("rust-lazy-static" ,rust-lazy-static-1)
-         ("rust-lz4" ,rust-lz4)
-         ("rust-regex" ,rust-regex-1.3)
-         ("rust-serde" ,rust-serde-1.0)
-         ("rust-serde-derive" ,rust-serde-derive-1.0)
-         ("rust-termcolor" ,rust-termcolor-1.0)
-         ("rust-toml" ,rust-toml-0.5)
-         ("rust-walkdir" ,rust-walkdir-2.2))))
-    (home-page
-      "https://github.com/ngirard/lolcate-rs")
-    (synopsis
-      "A comically fast way of indexing and querying your filesystem. Replaces locate / mlocate / updatedb.")
-    (description
-      "This package provides a comically fast way of indexing and querying your filesystem.  Replaces locate / mlocate / updatedb.")
-    (license license:gpl3)))
+;; (define-public rust-lolcate-rs
+;;   (package
+;;     (name "rust-lolcate-rs")
+;;     (version "0.5.0")
+;;     (source
+;;       (origin
+;;         (method url-fetch)
+;;         (uri (crate-uri "lolcate-rs" version))
+;;         (file-name
+;;           (string-append name "-" version ".tar.gz"))
+;;         (sha256
+;;           (base32
+;;             "19r46lapypmxl3fakfp9b03abhl4gx4h9l7p7f28zqyvmkk92fh5"))))
+;;     (build-system cargo-build-system)
+;;     (arguments
+;;       `(#:cargo-inputs
+;;         (("rust-clap" ,rust-clap-2)
+;;          ("rust-dirs" ,rust-dirs-2.0)
+;;          ("rust-expanduser" ,rust-expanduser)
+;;          ("rust-ignore" ,rust-ignore-0.4)
+;;          ("rust-lazy-static" ,rust-lazy-static-1)
+;;          ("rust-lz4" ,rust-lz4)
+;;          ("rust-regex" ,rust-regex-1.3)
+;;          ("rust-serde" ,rust-serde-1.0)
+;;          ("rust-serde-derive" ,rust-serde-derive-1.0)
+;;          ("rust-termcolor" ,rust-termcolor-1.0)
+;;          ("rust-toml" ,rust-toml-0.5)
+;;          ("rust-walkdir" ,rust-walkdir-2.2))))
+;;     (home-page
+;;       "https://github.com/ngirard/lolcate-rs")
+;;     (synopsis
+;;       "A comically fast way of indexing and querying your filesystem. Replaces locate / mlocate / updatedb.")
+;;     (description
+;;       "This package provides a comically fast way of indexing and querying your filesystem.  Replaces locate / mlocate / updatedb.")
+;;     (license license:gpl3)))
 
 ;; (define-public lolcate
 ;;   (package
