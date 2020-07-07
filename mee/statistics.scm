@@ -36,13 +36,18 @@
   #:use-module (srfi srfi-1)
   )
 
-
 ;; using (@ ...) for the external definition is necessary because we're giving
 ;; our local definition the same name, thus the name becomes a self-reference
 ;; to recurse on, not an external definition.
+;; (define-public gfortran-9
+;;   (package
+;;    (inherit (@@ (gnu packages gcc) gfortran-9))))
+
 (define-public gfortran-9
   (package
-   (inherit (@@ (gnu packages gcc) gfortran-9))))
+   (inherit ((@@ (gnu packages gcc) custom-gcc)
+             gcc-9 "gfortran" '("fortran")
+             (@@ (gnu packages gcc) %generic-search-paths)))))
 
 (define-public r-minimal-mee1
   (package
