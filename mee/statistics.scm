@@ -1525,3 +1525,398 @@ various statistical analysis programs such as R, Julia, and JAGS.")
     (description
       "Compose data for and extract, manipulate, and visualize posterior draws from Bayesian models ('JAGS', 'Stan', 'rstanarm', 'brms', 'MCMCglmm', 'coda', ...) in a tidy data format.  Functions are provided to help extract tidy data frames of draws from Bayesian models and that generate point summaries and intervals in a tidy format.  In addition, 'ggplot2' 'geoms' and 'stats' are provided for common visualization primitives like points with multiple uncertainty intervals, eye plots (intervals plus densities), and fit curves with multiple, arbitrary uncertainty bands.")
     (license gpl3+)))
+
+;;;
+;;; MODELTIME & DEPENDENCIES
+;;;
+
+(define-public r-prophet
+  (package
+    (name "r-prophet")
+    (version "0.6.1")
+    (source
+      (origin
+        (method url-fetch)
+        (uri (cran-uri "prophet" version))
+        (sha256
+          (base32
+            "08b5h4c83143q33slsa7x46bxa98rm5dg251zsb7ixvn2v0zkhk1"))))
+    (properties `((upstream-name . "prophet")))
+    (build-system r-build-system)
+    (propagated-inputs
+      `(("r-bh" ,r-bh)
+        ("r-dplyr" ,r-dplyr)
+        ("r-dygraphs" ,r-dygraphs)
+        ("r-extradistr" ,r-extradistr)
+        ("r-ggplot2" ,r-ggplot2)
+        ("r-rcpp" ,r-rcpp)
+        ("r-rcppeigen" ,r-rcppeigen)
+        ("r-rlang" ,r-rlang)
+        ("r-rstan" ,r-rstan)
+        ("r-rstantools" ,r-rstantools)
+        ("r-scales" ,r-scales)
+        ("r-stanheaders" ,r-stanheaders)
+        ("r-tidyr" ,r-tidyr)
+        ("r-xts" ,r-xts)))
+    (native-inputs `(("r-knitr" ,r-knitr)))
+    (home-page "https://github.com/facebook/prophet")
+    (synopsis "Automatic Forecasting Procedure")
+    (description
+      "Implements a procedure for forecasting time series data based on an additive model where non-linear trends are fit with yearly, weekly, and daily seasonality, plus holiday effects.  It works best with time series that have strong seasonal effects and several seasons of historical data.  Prophet is robust to missing data and shifts in the trend, and typically handles outliers well.")
+    (license expat)))
+
+(define-public r-progressr
+  (package
+    (name "r-progressr")
+    (version "0.6.0")
+    (source
+      (origin
+        (method url-fetch)
+        (uri (cran-uri "progressr" version))
+        (sha256
+          (base32
+            "1cvb1llxz7ys4535dfl6hl3j07g24mcvkg0kl46v4nnl7ka4jx67"))))
+    (properties `((upstream-name . "progressr")))
+    (build-system r-build-system)
+    (propagated-inputs `(("r-digest" ,r-digest)))
+    (home-page
+      "https://github.com/HenrikBengtsson/progressr")
+    (synopsis
+      "A Inclusive, Unifying API for Progress Updates")
+    (description
+      "This package provides a minimal, unifying API for scripts and packages to report progress updates from anywhere including when using parallel processing.  The package is designed such that the developer can to focus on what progress should be reported on without having to worry about how to present it.  The end user has full control of how, where, and when to render these progress updates, e.g.  in the terminal using utils::txtProgressBar() or progress::progress_bar(), in a graphical user interface using utils::winProgressBar(), tcltk::tkProgressBar() or shiny::withProgress(), via the speakers using beep::beepr(), or on a file system via the size of a file.  Anyone can add additional, customized, progression handlers.  The 'progressr' package uses R's condition framework for signaling progress updated.  Because of this, progress can be reported from almost anywhere in R, e.g.  from classical for and while loops, from map-reduce APIs like the lapply() family of functions, 'purrr', 'plyr', and 'foreach'.  It will also work with parallel processing via the 'future' framework, e.g.  future.apply::future_lapply(), furrr::future_map(), and 'foreach' with 'doFuture'.  The package is compatible with Shiny applications.")
+    (license gpl3+)))
+
+(define-public r-janitor
+  (package
+    (name "r-janitor")
+    (version "2.0.1")
+    (source
+      (origin
+        (method url-fetch)
+        (uri (cran-uri "janitor" version))
+        (sha256
+          (base32
+            "1dy8dlvnxg057qxpd5lk30wcxa15vw95888ccd99sqra789llm3n"))))
+    (properties `((upstream-name . "janitor")))
+    (build-system r-build-system)
+    (propagated-inputs
+      `(("r-dplyr" ,r-dplyr)
+        ("r-lifecycle" ,r-lifecycle)
+        ("r-lubridate" ,r-lubridate)
+        ("r-magrittr" ,r-magrittr)
+        ("r-purrr" ,r-purrr)
+        ("r-rlang" ,r-rlang)
+        ("r-snakecase" ,r-snakecase)
+        ("r-stringi" ,r-stringi)
+        ("r-stringr" ,r-stringr)
+        ("r-tidyr" ,r-tidyr)
+        ("r-tidyselect" ,r-tidyselect)))
+    (native-inputs `(("r-knitr" ,r-knitr)))
+    (home-page "https://github.com/sfirke/janitor")
+    (synopsis
+      "Simple Tools for Examining and Cleaning Dirty Data")
+    (description
+      "The main janitor functions can: perfectly format data.frame column names; provide quick counts of variable combinations (i.e., frequency tables and crosstabs); and isolate duplicate records.  Other janitor functions nicely format the tabulation results.  These tabulate-and-report functions approximate popular features of SPSS and Microsoft Excel.  This package follows the principles of the \"tidyverse\" and works well with the pipe function %>%.  janitor was built with beginning-to-intermediate R users in mind and is optimized for user-friendliness.  Advanced R users can already do everything covered here, but with janitor they can do it faster and save their thinking for the fun stuff.")
+    (license expat)))
+
+(define-public r-sass
+  (package
+    (name "r-sass")
+    (version "0.2.0")
+    (source
+      (origin
+        (method url-fetch)
+        (uri (cran-uri "sass" version))
+        (sha256
+          (base32
+            "0qzrncsnp0zd8jyp4whss92m7llqsfccmp9p9r3gdc7hlq1amp3z"))))
+    (properties `((upstream-name . "sass")))
+    (build-system r-build-system)
+    (propagated-inputs
+      `(("r-digest" ,r-digest)
+        ("r-fs" ,r-fs)
+        ("r-htmltools" ,r-htmltools)
+        ("r-rlang" ,r-rlang)))
+    (native-inputs `(("r-knitr" ,r-knitr)))
+    (home-page "https://github.com/rstudio/sass")
+    (synopsis
+      "Syntactically Awesome Style Sheets ('Sass')")
+    (description
+      "An 'SCSS' compiler, powered by the 'LibSass' library.  With this, R developers can use variables, inheritance, and functions to generate dynamic style sheets.  The package uses the 'Sass CSS' extension language, which is stable, powerful, and CSS compatible.")
+    (license expat)))
+
+(define-public r-gt
+  (package
+    (name "r-gt")
+    (version "0.2.1")
+    (source
+      (origin
+        (method url-fetch)
+        (uri (cran-uri "gt" version))
+        (sha256
+          (base32
+            "081rx851dlkpx6ial6vlbc5fmzqk56sxr66j15yxihncm05b6h8h"))))
+    (properties `((upstream-name . "gt")))
+    (build-system r-build-system)
+    (propagated-inputs
+      `(("r-checkmate" ,r-checkmate)
+        ("r-commonmark" ,r-commonmark)
+        ("r-dplyr" ,r-dplyr)
+        ("r-fs" ,r-fs)
+        ("r-ggplot2" ,r-ggplot2)
+        ("r-glue" ,r-glue)
+        ("r-htmltools" ,r-htmltools)
+        ("r-magrittr" ,r-magrittr)
+        ("r-rlang" ,r-rlang)
+        ("r-sass" ,r-sass)
+        ("r-scales" ,r-scales)
+        ("r-stringr" ,r-stringr)
+        ("r-tibble" ,r-tibble)
+        ("r-tidyselect" ,r-tidyselect)))
+    (home-page "https://github.com/rstudio/gt")
+    (synopsis
+      "Easily Create Presentation-Ready Display Tables")
+    (description
+      "Build display tables from tabular data with an easy-to-use set of functions.  With its progressive approach, we can construct display tables with a cohesive set of table parts.  Table values can be formatted using any of the included formatting functions.  Footnotes and cell styles can be precisely added through a location targeting system.  The way in which 'gt' handles things for you means that you don't often have to worry about the fine details.")
+    (license expat)))
+
+(define-public r-reactr
+  (package
+    (name "r-reactr")
+    (version "0.4.2")
+    (source
+      (origin
+        (method url-fetch)
+        (uri (cran-uri "reactR" version))
+        (sha256
+          (base32
+            "11rahxskch0r5hlqs7iy285dlhrmzm4vl18kbakx4jggwjqh61f5"))))
+    (properties `((upstream-name . "reactR")))
+    (build-system r-build-system)
+    (propagated-inputs
+      `(("r-htmltools" ,r-htmltools)))
+    (native-inputs `(("r-knitr" ,r-knitr)))
+    (home-page "https://github.com/react-R/reactR")
+    (synopsis "React Helpers")
+    (description
+      "Make it easy to use 'React' in R with 'htmlwidget' scaffolds, helper dependency functions, an embedded 'Babel' 'transpiler', and examples.")
+    (license expat)))
+
+(define-public r-reactable
+  (package
+    (name "r-reactable")
+    (version "0.2.0")
+    (source
+      (origin
+        (method url-fetch)
+        (uri (cran-uri "reactable" version))
+        (sha256
+          (base32
+            "037d3za9r9pa5isn7aqi4jzw43ki6i8aq9vir3fmhzwn6lja3z72"))))
+    (properties `((upstream-name . "reactable")))
+    (build-system r-build-system)
+    (propagated-inputs
+      `(("r-digest" ,r-digest)
+        ("r-htmltools" ,r-htmltools)
+        ("r-htmlwidgets" ,r-htmlwidgets)
+        ("r-jsonlite" ,r-jsonlite)
+        ("r-reactr" ,r-reactr)))
+    (home-page "https://glin.github.io/reactable")
+    (synopsis
+      "Interactive Data Tables Based on 'React Table'")
+    (description
+      "Interactive data tables for R, based on the 'React Table' JavaScript library.  Provides an HTML widget that can be used in 'R Markdown' documents and 'Shiny' applications, or viewed from an R console.")
+    (license expat)))
+
+(define-public r-anytime
+  (package
+    (name "r-anytime")
+    (version "0.3.7")
+    (source
+      (origin
+        (method url-fetch)
+        (uri (cran-uri "anytime" version))
+        (sha256
+          (base32
+            "0vkckxaq1ga73iszwr4lyf12c1cann1w9lhflz4p3xdgx468fzb9"))))
+    (properties `((upstream-name . "anytime")))
+    (build-system r-build-system)
+    (propagated-inputs
+      `(("r-bh" ,r-bh) ("r-rcpp" ,r-rcpp)))
+    (home-page
+      "http://dirk.eddelbuettel.com/code/anytime.html")
+    (synopsis
+      "Anything to 'POSIXct' or 'Date' Converter")
+    (description
+      "Convert input in any one of character, integer, numeric, factor, or ordered type into 'POSIXct' (or 'Date') objects, using one of a number of predefined formats, and relying on Boost facilities for date and time parsing.")
+    (license gpl2+)))
+
+(define-public r-warp
+  (package
+    (name "r-warp")
+    (version "0.1.0")
+    (source
+      (origin
+        (method url-fetch)
+        (uri (cran-uri "warp" version))
+        (sha256
+          (base32
+            "16bmym91h0sbbh4iqasqs0f4kp3jqlm3sqgc356mznhxwnsm8dm2"))))
+    (properties `((upstream-name . "warp")))
+    (build-system r-build-system)
+    (native-inputs `(("r-knitr" ,r-knitr)))
+    (home-page
+      "https://github.com/DavisVaughan/warp")
+    (synopsis "Group Dates")
+    (description
+      "Tooling to group dates by a variety of periods including: yearly, monthly, by second, by week of the month, and more.  The groups are defined in such a way that they also represent the distance between dates in terms of the period.  This extracts valuable information that can be used in further calculations that rely on a specific temporal spacing between observations.")
+    (license expat)))
+
+(define-public r-slider
+  (package
+    (name "r-slider")
+    (version "0.1.4")
+    (source
+      (origin
+        (method url-fetch)
+        (uri (cran-uri "slider" version))
+        (sha256
+          (base32
+            "0waa3s6fbr0h7gpap1akvdh3sg5ib4c67rkg91b6y6fpqjrr70xc"))))
+    (properties `((upstream-name . "slider")))
+    (build-system r-build-system)
+    (propagated-inputs
+      `(("r-glue" ,r-glue)
+        ("r-rlang" ,r-rlang)
+        ("r-vctrs" ,r-vctrs)
+        ("r-warp" ,r-warp)))
+    (native-inputs `(("r-knitr" ,r-knitr)))
+    (home-page
+      "https://github.com/DavisVaughan/slider")
+    (synopsis "Sliding Window Functions")
+    (description
+      "This package provides type-stable rolling window functions over any R data type.  Cumulative and expanding windows are also supported.  For more advanced usage, an index can be used as a secondary vector that defines how sliding windows are to be created.")
+    (license expat)))
+
+(define-public r-padr
+  (package
+    (name "r-padr")
+    (version "0.5.2")
+    (source
+      (origin
+        (method url-fetch)
+        (uri (cran-uri "padr" version))
+        (sha256
+          (base32
+            "0cnsycwd9zpz4apk7rizgyjrg072kqyk4p4q5grdlfzv73ivr7ab"))))
+    (properties `((upstream-name . "padr")))
+    (build-system r-build-system)
+    (propagated-inputs
+      `(("r-dplyr" ,r-dplyr)
+        ("r-lubridate" ,r-lubridate)
+        ("r-rcpp" ,r-rcpp)
+        ("r-rlang" ,r-rlang)))
+    (native-inputs `(("r-knitr" ,r-knitr)))
+    (home-page "https://github.com/EdwinTh/padr")
+    (synopsis
+      "Quickly Get Datetime Data Ready for Analysis")
+    (description
+      "Transforms datetime data into a format ready for analysis.  It offers two core functionalities; aggregating data to a higher level interval (thicken) and imputing records where observations were absent (pad).")
+    (license expat)))
+
+(define-public r-timetk
+  (package
+    (name "r-timetk")
+    (version "2.1.0")
+    (source
+      (origin
+        (method url-fetch)
+        (uri (cran-uri "timetk" version))
+        (sha256
+          (base32
+            "0k1vyv2z48l4ql8isnrzlp4gz3h9j6cscccvbszbayy911bq285m"))))
+    (properties `((upstream-name . "timetk")))
+    (build-system r-build-system)
+    (propagated-inputs
+      `(("r-anytime" ,r-anytime)
+        ("r-assertthat" ,r-assertthat)
+        ("r-dplyr" ,r-dplyr)
+        ("r-forcats" ,r-forcats)
+        ("r-forecast" ,r-forecast)
+        ("r-ggplot2" ,r-ggplot2)
+        ("r-hms" ,r-hms)
+        ("r-lazyeval" ,r-lazyeval)
+        ("r-lubridate" ,r-lubridate)
+        ("r-padr" ,r-padr)
+        ("r-plotly" ,r-plotly)
+        ("r-purrr" ,r-purrr)
+        ("r-readr" ,r-readr)
+        ("r-recipes" ,r-recipes)
+        ("r-rlang" ,r-rlang)
+        ("r-rsample" ,r-rsample)
+        ("r-slider" ,r-slider)
+        ("r-stringi" ,r-stringi)
+        ("r-stringr" ,r-stringr)
+        ("r-tibble" ,r-tibble)
+        ("r-tidyr" ,r-tidyr)
+        ("r-tidyselect" ,r-tidyselect)
+        ("r-timedate" ,r-timedate)
+        ("r-xts" ,r-xts)
+        ("r-zoo" ,r-zoo)))
+    (native-inputs `(("r-knitr" ,r-knitr)))
+    (home-page
+      "https://github.com/business-science/timetk")
+    (synopsis
+      "A Tool Kit for Working with Time Series in R")
+    (description
+      " Easy visualization, wrangling, and preprocessing of time series data for forecasting and machine learning prediction.  Methods discussed herein are commonplace in machine learning, and have been cited in various literature.  Refer to \"Calendar Effects\" in papers such as Taieb, Souhaib Ben. \"Machine learning strategies for multi-step-ahead time series forecasting.\" Universit Libre de Bruxelles, Belgium (2014): 75-86. <http://souhaib-bentaieb.com/pdf/2014_phd.pdf>.")
+    (license gpl3+)))
+
+(define-public r-modeltime
+  (package
+    (name "r-modeltime")
+    (version "0.0.2")
+    (source
+      (origin
+        (method url-fetch)
+        (uri (cran-uri "modeltime" version))
+        (sha256
+          (base32
+            "0y52v5n0cv9x3ck25kgdf8sad02v2gida982ahrcm0vjxqxqm5ma"))))
+    (properties `((upstream-name . "modeltime")))
+    (build-system r-build-system)
+    (propagated-inputs
+      `(("r-dials" ,r-dials)
+        ("r-dplyr" ,r-dplyr)
+        ("r-forcats" ,r-forcats)
+        ("r-forecast" ,r-forecast)
+        ("r-ggplot2" ,r-ggplot2)
+        ("r-glue" ,r-glue)
+        ("r-gt" ,r-gt)
+        ("r-hardhat" ,r-hardhat)
+        ("r-janitor" ,r-janitor)
+        ("r-magrittr" ,r-magrittr)
+        ("r-parsnip" ,r-parsnip)
+        ("r-plotly" ,r-plotly)
+        ("r-progressr" ,r-progressr)
+        ("r-prophet" ,r-prophet)
+        ("r-purrr" ,r-purrr)
+        ("r-reactable" ,r-reactable)
+        ("r-rlang" ,r-rlang)
+        ("r-scales" ,r-scales)
+        ("r-stringr" ,r-stringr)
+        ("r-tibble" ,r-tibble)
+        ("r-tidyr" ,r-tidyr)
+        ("r-timetk" ,r-timetk)
+        ("r-workflows" ,r-workflows)
+        ("r-xgboost" ,r-xgboost)
+        ("r-yardstick" ,r-yardstick)))
+    (native-inputs `(("r-knitr" ,r-knitr)))
+    (home-page
+      "https://github.com/business-science/modeltime")
+    (synopsis
+      "The Tidymodels Extension for Time Series Modeling")
+    (description
+      " The time series forecasting framework for use with the 'tidymodels' ecosystem.  Models include ARIMA, Exponential Smoothing, and additional time series models from the 'forecast' and 'prophet' packages.  Refer to \"Forecasting Principles & Practice, Second edition\" (<https://otexts.com/fpp2/>).  Refer to \"Prophet: forecasting at scale\" (<https://research.fb.com/blog/2017/02/prophet-forecasting-at-scale/>.).")
+    (license expat)))
