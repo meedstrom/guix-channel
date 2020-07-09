@@ -756,6 +756,61 @@ various statistical analysis programs such as R, Julia, and JAGS.")
 ;; TIDYMODELS & DEPENDENCIES
 ;; custom: tidyposterior (see comments)
 
+(define-public r-hardhat
+  (package
+    (name "r-hardhat")
+    (version "0.1.4")
+    (source
+      (origin
+        (method url-fetch)
+        (uri (cran-uri "hardhat" version))
+        (sha256
+          (base32
+            "0gaj4hr4dj27jaasp7v0hzaivipplvq746ajsyz4yd1in03hfjvs"))))
+    (properties `((upstream-name . "hardhat")))
+    (build-system r-build-system)
+    (propagated-inputs
+      `(("r-glue" ,r-glue)
+        ("r-rlang" ,r-rlang)
+        ("r-tibble" ,r-tibble)
+        ("r-vctrs" ,r-vctrs)))
+    (native-inputs `(("r-knitr" ,r-knitr)))
+    (home-page
+      "https://github.com/tidymodels/hardhat")
+    (synopsis "Construct Modeling Packages")
+    (description
+      "Building modeling packages is hard.  A large amount of effort generally goes into providing an implementation for a new method that is efficient, fast, and correct, but often less emphasis is put on the user interface.  A good interface requires specialized knowledge about S3 methods and formulas, which the average package developer might not have.  The goal of 'hardhat' is to reduce the burden around building new modeling packages by providing functionality for preprocessing, predicting, and validating input.")
+    (license expat)))
+
+(define-public r-workflows
+  (package
+    (name "r-workflows")
+    (version "0.1.2")
+    (source
+      (origin
+        (method url-fetch)
+        (uri (cran-uri "workflows" version))
+        (sha256
+          (base32
+            "1i0vvg6l70gvqywlbpn58vsplcy8adkw6ws1k1lcvpq2pj2r0xgc"))))
+    (properties `((upstream-name . "workflows")))
+    (build-system r-build-system)
+    (propagated-inputs
+      `(("r-cli" ,r-cli)
+        ("r-ellipsis" ,r-ellipsis)
+        ("r-generics" ,r-generics)
+        ("r-glue" ,r-glue)
+        ("r-hardhat" ,r-hardhat)
+        ("r-parsnip" ,r-parsnip)
+        ("r-rlang" ,r-rlang)))
+    (native-inputs `(("r-knitr" ,r-knitr)))
+    (home-page
+      "https://github.com/tidymodels/workflows")
+    (synopsis "Modeling Workflows")
+    (description
+      "Managing both a 'parsnip' model and a preprocessor, such as a model formula or recipe from 'recipes', can often be challenging.  The goal of 'workflows' is to streamline this process by bundling the model alongside the preprocessor, all within the same object.")
+    (license expat)))
+
 (define-public r-gpfit
   (package
     (name "r-gpfit")
@@ -775,193 +830,20 @@ various statistical analysis programs such as R, Julia, and JAGS.")
       "https://cran.r-project.org/web/packages/GPfit")
     (synopsis "Gaussian Processes Modeling")
     (description
-     "This package provides a computationally stable approach of fitting a Gaussian Process (GP) model to a deterministic simulator.")
+      "This package provides a computationally stable approach of fitting a Gaussian Process (GP) model to a deterministic simulator.")
     (license gpl2)))
-
-(define-public r-hardhat
-  (package
-    (name "r-hardhat")
-    (version "0.1.3")
-    (source
-      (origin
-        (method url-fetch)
-        (uri (cran-uri "hardhat" version))
-        (sha256
-          (base32
-            "10x8fw0skaqci03v2qqpbradbra9arm3s5pskcwm4wricd2imr40"))))
-    (properties `((upstream-name . "hardhat")))
-    (build-system r-build-system)
-    (propagated-inputs
-      `(("r-glue" ,r-glue)
-        ("r-rlang" ,r-rlang)
-        ("r-tibble" ,r-tibble)
-        ("r-vctrs" ,r-vctrs)))
-    (native-inputs `(("r-knitr" ,r-knitr)))
-    (home-page
-      "https://github.com/tidymodels/hardhat")
-    (synopsis "Construct Modeling Packages")
-    (description
-      "Building modeling packages is hard.  A large amount of effort generally goes into providing an implementation for a new method that is efficient, fast, and correct, but often less emphasis is put on the user interface.  A good interface requires specialized knowledge about S3 methods and formulas, which the average package developer might not have.  The goal of 'hardhat' is to reduce the burden around building new modeling packages by providing functionality for preprocessing, predicting, and validating input.")
-    (license expat)))
-
-(define-public r-tokenizers
-  (package
-   (name "r-tokenizers")
-   (version "0.2.1")
-   (source
-    (origin
-     (method url-fetch)
-     (uri (cran-uri "tokenizers" version))
-     (sha256
-      (base32
-       "006xf1vdrmp9skhpss9ldhmk4cwqk512cjp1pxm2gxfybpf7qq98"))))
-   (properties `((upstream-name . "tokenizers")))
-   (build-system r-build-system)
-   (propagated-inputs
-    `(("r-rcpp" ,r-rcpp)
-      ("r-snowballc" ,r-snowballc)
-      ("r-stringi" ,r-stringi)))
-   (home-page
-    "https://lincolnmullen.com/software/tokenizers/")
-   (synopsis
-    "Fast, Consistent Tokenization of Natural Language Text")
-   (description
-    "Convert natural language text into tokens.  Includes tokenizers for shingled n-grams, skip n-grams, words, word stems, sentences, paragraphs, characters, shingled characters, lines, tweets, Penn Treebank, regular expressions, as well as functions for counting characters, words, and sentences, and a function for splitting longer texts into separate documents, each with the same number of words.  The tokenizers have a consistent interface, and the package is built on the 'stringi' and 'Rcpp' packages for  fast yet correct tokenization in 'UTF-8'.")
-   (license expat)))
-
-(define-public r-janeaustenr
-  (package
-   (name "r-janeaustenr")
-   (version "0.1.5")
-   (source
-    (origin
-     (method url-fetch)
-     (uri (cran-uri "janeaustenr" version))
-     (sha256
-      (base32
-       "1wyn4qc28a3sval8shmyi2d7s4nl3jh96s8pzq871brxcmrncbwr"))))
-   (properties `((upstream-name . "janeaustenr")))
-   (build-system r-build-system)
-   (home-page
-    "https://github.com/juliasilge/janeaustenr")
-   (synopsis "Jane Austen's Complete Novels")
-   (description
-    "Full texts for Jane Austen's 6 completed novels, ready for text analysis.  These novels are \"Sense and Sensibility\", \"Pride and Prejudice\", \"Mansfield Park\", \"Emma\", \"Northanger Abbey\", and \"Persuasion\".")
-   (license expat)))
-
-(define-public r-dicedesign
-  (package
-   (name "r-dicedesign")
-   (version "1.8-1")
-   (source
-    (origin
-     (method url-fetch)
-     (uri (cran-uri "DiceDesign" version))
-     (sha256
-      (base32
-       "11s1m543kxd6gv4amh8z6pph1n67sj9sfwm6hjy83wfs65syf5vp"))))
-   (properties `((upstream-name . "DiceDesign")))
-   (build-system r-build-system)
-   (home-page "http://dice.emse.fr/")
-   (synopsis "Designs of Computer Experiments")
-   (description
-    "Space-Filling Designs and Uniformity Criteria.")
-   (license gpl3)))
-
-(define-public r-hunspell
-  (package
-   (name "r-hunspell")
-   (version "3.0")
-   (source
-    (origin
-     (method url-fetch)
-     (uri (cran-uri "hunspell" version))
-     (sha256
-      (base32
-       "0mwqw5p0ph083plm2hr2hqr50bjg2dw862dpsfm4l2fgyy3rryq1"))))
-   (properties `((upstream-name . "hunspell")))
-   (build-system r-build-system)
-   (propagated-inputs
-    `(("r-digest" ,r-digest) ("r-rcpp" ,r-rcpp)))
-   (home-page
-    "https://github.com/ropensci/hunspell#readmehttps://hunspell.github.io")
-   (synopsis
-    "High-Performance Stemmer, Tokenizer, and Spell Checker")
-   (description
-    "Low level spell checker and morphological analyzer based on the famous 'hunspell' library <https://hunspell.github.io>.  The package can analyze or check individual words as well as parse text, latex, html or xml documents.  For a more user-friendly interface use the 'spelling' package which builds on this package to automate checking of files, documentation and vignettes in all common formats.")
-   (license #f)))
-
-(define-public r-dials
-  (package
-    (name "r-dials")
-    (version "0.0.6")
-    (source
-      (origin
-        (method url-fetch)
-        (uri (cran-uri "dials" version))
-        (sha256
-          (base32
-            "0hvhn8adkb8pywfh058vj681bccm4iyky11ijc01xk2w3iaslyr9"))))
-    (properties `((upstream-name . "dials")))
-    (build-system r-build-system)
-    (propagated-inputs
-      `(("r-dicedesign" ,r-dicedesign)
-        ("r-dplyr" ,r-dplyr)
-        ("r-glue" ,r-glue)
-        ("r-lifecycle" ,r-lifecycle)
-        ("r-purrr" ,r-purrr)
-        ("r-rlang" ,r-rlang)
-        ("r-scales" ,r-scales)
-        ("r-tibble" ,r-tibble)
-        ("r-withr" ,r-withr)))
-    (native-inputs `(("r-knitr" ,r-knitr)))
-    (home-page "https://tidymodels.github.io/dials")
-    (synopsis
-      "Tools for Creating Tuning Parameter Values")
-    (description
-      "Many models contain tuning parameters (i.e.  parameters that cannot be directly estimated from the data).  These tools can be used to define objects for creating, simulating, or validating values for such parameters.")
-    (license gpl2)))
-
-(define-public r-workflows
-  (package
-    (name "r-workflows")
-    (version "0.1.1")
-    (source
-      (origin
-        (method url-fetch)
-        (uri (cran-uri "workflows" version))
-        (sha256
-          (base32
-            "14lzbszz7ybfzqa5zw1hfh81b8rbwwyza6x8nhpnknl6x4adqfql"))))
-    (properties `((upstream-name . "workflows")))
-    (build-system r-build-system)
-    (propagated-inputs
-      `(("r-cli" ,r-cli)
-        ("r-ellipsis" ,r-ellipsis)
-        ("r-generics" ,r-generics)
-        ("r-glue" ,r-glue)
-        ("r-hardhat" ,r-hardhat)
-        ("r-parsnip" ,r-parsnip)
-        ("r-rlang" ,r-rlang)))
-    (native-inputs `(("r-knitr" ,r-knitr)))
-    (home-page
-      "https://github.com/tidymodels/workflows")
-    (synopsis "Modeling Workflows")
-    (description
-      "Managing both a 'parsnip' model and a preprocessor, such as a model formula or recipe from 'recipes', can often be challenging.  The goal of 'workflows' is to streamline this process by bundling the model alongside the preprocessor, all within the same object.")
-    (license expat)))
 
 (define-public r-yardstick
   (package
     (name "r-yardstick")
-    (version "0.0.5")
+    (version "0.0.6")
     (source
       (origin
         (method url-fetch)
         (uri (cran-uri "yardstick" version))
         (sha256
           (base32
-            "0gmfq1jx8lp6b24clxyj5r1976q3znlchbqa6jk87lyd5fn43f7b"))))
+            "1qkvbvc0cnwl5mkk47swnd8by84zz0qpy1996fziapn35qxvx9qa"))))
     (properties `((upstream-name . "yardstick")))
     (build-system r-build-system)
     (propagated-inputs
@@ -971,6 +853,7 @@ various statistical analysis programs such as R, Julia, and JAGS.")
         ("r-rcpp" ,r-rcpp)
         ("r-rlang" ,r-rlang)
         ("r-tidyselect" ,r-tidyselect)))
+    (native-inputs `(("r-knitr" ,r-knitr)))
     (home-page
       "https://github.com/tidymodels/yardstick")
     (synopsis
@@ -982,14 +865,14 @@ various statistical analysis programs such as R, Julia, and JAGS.")
 (define-public r-tune
   (package
     (name "r-tune")
-    (version "0.0.1")
+    (version "0.1.1")
     (source
       (origin
         (method url-fetch)
         (uri (cran-uri "tune" version))
         (sha256
           (base32
-            "1nfhyw06wfgwx6gkvh5h1slhwk31nwplw16aqvk1ma5g1czg9k3n"))))
+            "0293xkmv1nyvm72wxznnlm3qpf6475xzl2sf52mnrjxxr7i447p1"))))
     (properties `((upstream-name . "tune")))
     (build-system r-build-system)
     (propagated-inputs
@@ -1002,6 +885,7 @@ various statistical analysis programs such as R, Julia, and JAGS.")
         ("r-glue" ,r-glue)
         ("r-gpfit" ,r-gpfit)
         ("r-hardhat" ,r-hardhat)
+        ("r-lifecycle" ,r-lifecycle)
         ("r-parsnip" ,r-parsnip)
         ("r-purrr" ,r-purrr)
         ("r-recipes" ,r-recipes)
@@ -1009,6 +893,7 @@ various statistical analysis programs such as R, Julia, and JAGS.")
         ("r-rsample" ,r-rsample)
         ("r-tibble" ,r-tibble)
         ("r-tidyr" ,r-tidyr)
+        ("r-vctrs" ,r-vctrs)
         ("r-workflows" ,r-workflows)
         ("r-yardstick" ,r-yardstick)))
     (home-page "https://github.com/tidymodels/tune")
@@ -1020,29 +905,31 @@ various statistical analysis programs such as R, Julia, and JAGS.")
 (define-public r-tidyposterior
   (package
     (name "r-tidyposterior")
-    (version "0.0.2")
+    (version "0.0.3")
     (source
       (origin
         (method url-fetch)
         (uri (cran-uri "tidyposterior" version))
         (sha256
           (base32
-            "1sdbar3ycnjqyjy664zyhr9xks48l6g6mw8p5scp31x3gdh352rs"))))
+            "0wsv800w056ziqbnwal7ncmdy4li8cn5yrdx07w35b7j8kl4mwhg"))))
     (properties `((upstream-name . "tidyposterior")))
     (build-system r-build-system)
     (propagated-inputs
       `(("r-dplyr" ,r-dplyr)
         ("r-generics" ,r-generics)
         ("r-ggplot2" ,r-ggplot2)
+        ("r-lifecycle" ,r-lifecycle)
         ("r-purrr" ,r-purrr)
         ("r-rlang" ,r-rlang)
         ("r-rsample" ,r-rsample)
-        ("r-rstanarm" ,r-rstanarm-mee1) ;; For yknow
+        ("r-rstanarm" ,r-rstanarm-mee1)
         ("r-tibble" ,r-tibble)
-        ("r-knitr" ,r-knitr) ;; For vignette builder in test phase
-        ("r-tidyr" ,r-tidyr)))
+        ("r-tidyr" ,r-tidyr)
+        ("r-vctrs" ,r-vctrs)))
+    (native-inputs `(("r-knitr" ,r-knitr)))
     (home-page
-      "https://tidymodels.github.io/tidyposterior")
+      "https://tidyposterior.tidymodels.org")
     (synopsis
       "Bayesian Analysis to Compare Models using Resampling Statistics")
     (description
@@ -1069,12 +956,83 @@ various statistical analysis programs such as R, Julia, and JAGS.")
         ("r-purrr" ,r-purrr)
         ("r-rlang" ,r-rlang)
         ("r-tibble" ,r-tibble)))
+    (native-inputs `(("r-knitr" ,r-knitr)))
     (home-page
       "https://tidymodels.github.io/tidypredict")
     (synopsis "Run Predictions Inside the Database")
     (description
       "It parses a fitted 'R' model object, and returns a formula in 'Tidy Eval' code that calculates the predictions.  It works with several databases back-ends because it leverages 'dplyr' and 'dbplyr' for the final 'SQL' translation of the algorithm.  It currently supports lm(), glm(), randomForest(), ranger(), earth(), xgb.Booster.complete(), cubist(), and ctree() models.")
     (license gpl3)))
+
+(define-public r-janeaustenr
+  (package
+    (name "r-janeaustenr")
+    (version "0.1.5")
+    (source
+      (origin
+        (method url-fetch)
+        (uri (cran-uri "janeaustenr" version))
+        (sha256
+          (base32
+            "1wyn4qc28a3sval8shmyi2d7s4nl3jh96s8pzq871brxcmrncbwr"))))
+    (properties `((upstream-name . "janeaustenr")))
+    (build-system r-build-system)
+    (home-page
+      "https://github.com/juliasilge/janeaustenr")
+    (synopsis "Jane Austen's Complete Novels")
+    (description
+      "Full texts for Jane Austen's 6 completed novels, ready for text analysis.  These novels are \"Sense and Sensibility\", \"Pride and Prejudice\", \"Mansfield Park\", \"Emma\", \"Northanger Abbey\", and \"Persuasion\".")
+    (license expat)))
+
+(define-public r-tokenizers
+  (package
+    (name "r-tokenizers")
+    (version "0.2.1")
+    (source
+      (origin
+        (method url-fetch)
+        (uri (cran-uri "tokenizers" version))
+        (sha256
+          (base32
+            "006xf1vdrmp9skhpss9ldhmk4cwqk512cjp1pxm2gxfybpf7qq98"))))
+    (properties `((upstream-name . "tokenizers")))
+    (build-system r-build-system)
+    (propagated-inputs
+      `(("r-rcpp" ,r-rcpp)
+        ("r-snowballc" ,r-snowballc)
+        ("r-stringi" ,r-stringi)))
+    (native-inputs `(("r-knitr" ,r-knitr)))
+    (home-page
+      "https://lincolnmullen.com/software/tokenizers/")
+    (synopsis
+      "Fast, Consistent Tokenization of Natural Language Text")
+    (description
+      "Convert natural language text into tokens.  Includes tokenizers for shingled n-grams, skip n-grams, words, word stems, sentences, paragraphs, characters, shingled characters, lines, tweets, Penn Treebank, regular expressions, as well as functions for counting characters, words, and sentences, and a function for splitting longer texts into separate documents, each with the same number of words.  The tokenizers have a consistent interface, and the package is built on the 'stringi' and 'Rcpp' packages for  fast yet correct tokenization in 'UTF-8'.")
+    (license expat)))
+
+(define-public r-hunspell
+  (package
+    (name "r-hunspell")
+    (version "3.0")
+    (source
+      (origin
+        (method url-fetch)
+        (uri (cran-uri "hunspell" version))
+        (sha256
+          (base32
+            "0mwqw5p0ph083plm2hr2hqr50bjg2dw862dpsfm4l2fgyy3rryq1"))))
+    (properties `((upstream-name . "hunspell")))
+    (build-system r-build-system)
+    (propagated-inputs
+      `(("r-digest" ,r-digest) ("r-rcpp" ,r-rcpp)))
+    (native-inputs `(("r-knitr" ,r-knitr)))
+    (home-page
+      "https://github.com/ropensci/hunspell#readmehttps://hunspell.github.io")
+    (synopsis
+      "High-Performance Stemmer, Tokenizer, and Spell Checker")
+    (description
+      "Low level spell checker and morphological analyzer based on the famous 'hunspell' library <https://hunspell.github.io>.  The package can analyze or check individual words as well as parse text, latex, html or xml documents.  For a more user-friendly interface use the 'spelling' package which builds on this package to automate checking of files, documentation and vignettes in all common formats.")
+    (license #f)))
 
 (define-public r-tidytext
   (package
@@ -1142,14 +1100,14 @@ various statistical analysis programs such as R, Julia, and JAGS.")
 (define-public r-parsnip
   (package
     (name "r-parsnip")
-    (version "0.1.1")
+    (version "0.1.2")
     (source
       (origin
         (method url-fetch)
         (uri (cran-uri "parsnip" version))
         (sha256
           (base32
-            "1p33absjd2lnq5aikr42him4b724qzxr1pzvdnazg789f763i47l"))))
+            "08wzninr0wj2da6rssqjrfjfpkwbxn0i50pwjm4gcbs6mq62lxrk"))))
     (properties `((upstream-name . "parsnip")))
     (build-system r-build-system)
     (propagated-inputs
@@ -1165,8 +1123,7 @@ various statistical analysis programs such as R, Julia, and JAGS.")
         ("r-tidyr" ,r-tidyr)
         ("r-vctrs" ,r-vctrs)))
     (native-inputs `(("r-knitr" ,r-knitr)))
-    (home-page
-      "https://tidymodels.github.io/parsnip")
+    (home-page "https://parsnip.tidymodels.org")
     (synopsis
       "A Common API to Modeling and Analysis Functions")
     (description
@@ -1176,30 +1133,80 @@ various statistical analysis programs such as R, Julia, and JAGS.")
 (define-public r-infer
   (package
     (name "r-infer")
-    (version "0.5.1")
+    (version "0.5.2")
     (source
       (origin
         (method url-fetch)
         (uri (cran-uri "infer" version))
         (sha256
           (base32
-            "0m22bv71hmi3p89p1cx4rjqp7547i4sma8nl12qjvq1d4955lf28"))))
+            "0m00xhzrvmskwj4jwncakwxhzivn9pyiylq4r8s6ny4yiwqg303m"))))
     (properties `((upstream-name . "infer")))
     (build-system r-build-system)
     (propagated-inputs
       `(("r-dplyr" ,r-dplyr)
         ("r-ggplot2" ,r-ggplot2)
         ("r-glue" ,r-glue)
-        ("r-lifecycle" ,r-lifecycle)
         ("r-magrittr" ,r-magrittr)
         ("r-purrr" ,r-purrr)
         ("r-rlang" ,r-rlang)
         ("r-tibble" ,r-tibble)))
+    (native-inputs `(("r-knitr" ,r-knitr)))
     (home-page "https://github.com/tidymodels/infer")
     (synopsis "Tidy Statistical Inference")
     (description
       "The objective of this package is to perform inference using an expressive statistical grammar that coheres with the tidy design framework.")
     (license #f)))
+
+(define-public r-dicedesign
+  (package
+    (name "r-dicedesign")
+    (version "1.8-1")
+    (source
+      (origin
+        (method url-fetch)
+        (uri (cran-uri "DiceDesign" version))
+        (sha256
+          (base32
+            "11s1m543kxd6gv4amh8z6pph1n67sj9sfwm6hjy83wfs65syf5vp"))))
+    (properties `((upstream-name . "DiceDesign")))
+    (build-system r-build-system)
+    (home-page "http://dice.emse.fr/")
+    (synopsis "Designs of Computer Experiments")
+    (description
+      "Space-Filling Designs and Uniformity Criteria.")
+    (license gpl3)))
+
+(define-public r-dials
+  (package
+    (name "r-dials")
+    (version "0.0.8")
+    (source
+      (origin
+        (method url-fetch)
+        (uri (cran-uri "dials" version))
+        (sha256
+          (base32
+            "0jxmlcy20y57chflx91fqz6c4pbdckzr7jirq4s72vp723avrr4p"))))
+    (properties `((upstream-name . "dials")))
+    (build-system r-build-system)
+    (propagated-inputs
+      `(("r-dicedesign" ,r-dicedesign)
+        ("r-dplyr" ,r-dplyr)
+        ("r-glue" ,r-glue)
+        ("r-purrr" ,r-purrr)
+        ("r-rlang" ,r-rlang)
+        ("r-scales" ,r-scales)
+        ("r-tibble" ,r-tibble)
+        ("r-vctrs" ,r-vctrs)
+        ("r-withr" ,r-withr)))
+    (native-inputs `(("r-knitr" ,r-knitr)))
+    (home-page "https://tidymodels.github.io/dials")
+    (synopsis
+      "Tools for Creating Tuning Parameter Values")
+    (description
+      "Many models contain tuning parameters (i.e.  parameters that cannot be directly estimated from the data).  These tools can be used to define objects for creating, simulating, or validating values for such parameters.")
+    (license gpl2)))
 
 (define-public r-tidymodels
   (package
@@ -1237,6 +1244,7 @@ various statistical analysis programs such as R, Julia, and JAGS.")
         ("r-tune" ,r-tune)
         ("r-workflows" ,r-workflows)
         ("r-yardstick" ,r-yardstick)))
+    (native-inputs `(("r-knitr" ,r-knitr)))
     (home-page
       "https://github.com/tidymodels/tidymodels")
     (synopsis
@@ -1244,679 +1252,3 @@ various statistical analysis programs such as R, Julia, and JAGS.")
     (description
       "The tidy modeling \"verse\" is a collection of packages for modeling and statistical analysis that share the underlying design philosophy, grammar, and data structures of the tidyverse.")
     (license #f)))
-
-
-
-;; =============================================================================
-;; BRMS AND DEPENDENCIES
-
-(define-public r-bridgesampling
-  (package
-   (name "r-bridgesampling")
-   (version "0.7-2")
-   (source
-    (origin
-     (method url-fetch)
-     (uri (cran-uri "bridgesampling" version))
-     (sha256
-      (base32
-       "0kd4p5pz46vssjb8faxwy5nv6r403a89h8hylxhq50n2rj94x934"))))
-   (properties
-    `((upstream-name . "bridgesampling")))
-   (build-system r-build-system)
-   (propagated-inputs
-    `(("r-brobdingnag" ,r-brobdingnag)
-      ("r-coda" ,r-coda)
-      ("r-matrix" ,r-matrix)
-      ("r-mvnfast" ,r-mvnfast)
-      ("r-scales" ,r-scales)
-      ("r-stringr" ,r-stringr)))
-   (home-page
-    "https://github.com/quentingronau/bridgesampling")
-   (synopsis
-    "Bridge Sampling for Marginal Likelihoods and Bayes Factors")
-   (description
-    "This package provides functions for estimating marginal likelihoods, Bayes factors, posterior model probabilities, and normalizing constants in general, via different versions of bridge sampling (Meng & Wong, 1996, <http://www3.stat.sinica.edu.tw/statistica/j6n4/j6n43/j6n43.htm>).")
-   (license gpl2+)))
-
-(define-public r-mvnfast
-  (package
-   (name "r-mvnfast")
-   (version "0.2.5")
-   (source
-    (origin
-     (method url-fetch)
-     (uri (cran-uri "mvnfast" version))
-     (sha256
-      (base32
-       "122zjzr0v4943cax10lp6flwfv479mncvalaj09kb173s5rgmf91"))))
-   (properties `((upstream-name . "mvnfast")))
-   (build-system r-build-system)
-   (propagated-inputs
-    `(("r-bh" ,r-bh)
-      ("r-rcpp" ,r-rcpp)
-      ("r-rcpparmadillo" ,r-rcpparmadillo)))
-   (home-page "https://github.com/mfasiolo/mvnfast")
-   (synopsis
-    "Fast Multivariate Normal and Student's t Methods")
-   (description
-    "This package provides computationally efficient tools related to the multivariate normal and Student's t distributions.  The main functionalities are: simulating multivariate random vectors, evaluating multivariate normal or Student's t densities and Mahalanobis distances.  These tools are very efficient thanks to the use of C++ code and of the OpenMP API.")
-   (license gpl2+)))
-
-(define-public r-brms
-  (package
-    (name "r-brms")
-    (version "2.13.0")
-    (source
-      (origin
-        (method url-fetch)
-        (uri (cran-uri "brms" version))
-        (sha256
-          (base32
-            "0vdncdawxawi16f326qrgy9jjjipmqdjxh741y9p7xdzd4fwaxx3"))))
-    (properties `((upstream-name . "brms")))
-    (build-system r-build-system)
-    (propagated-inputs
-      `(("r-abind" ,r-abind)
-        ("r-backports" ,r-backports)
-        ("r-bayesplot" ,r-bayesplot)
-        ("r-bridgesampling" ,r-bridgesampling)
-        ("r-coda" ,r-coda)
-        ("r-future" ,r-future)
-        ("r-ggplot2" ,r-ggplot2)
-        ("r-glue" ,r-glue)
-        ("r-loo" ,r-loo)
-        ("r-matrix" ,r-matrix)
-        ("r-matrixstats" ,r-matrixstats)
-        ("r-mgcv" ,r-mgcv)
-        ("r-nleqslv" ,r-nleqslv)
-        ("r-nlme" ,r-nlme)
-        ("r-rcpp" ,r-rcpp)
-        ("r-rstan" ,r-rstan-mee1)
-        ("r-rstantools" ,r-rstantools)
-        ("r-shinystan" ,r-shinystan-mee1)))
-    (native-inputs `(("r-knitr" ,r-knitr)))
-    (home-page
-      "https://github.com/paul-buerkner/brms")
-    (synopsis
-      "Bayesian Regression Models using 'Stan'")
-    (description
-      "Fit Bayesian generalized (non-)linear multivariate multilevel models using 'Stan' for full Bayesian inference.  A wide range of distributions and link functions are supported, allowing users to fit -- among others -- linear, robust linear, count data, survival, response times, ordinal, zero-inflated, hurdle, and even self-defined mixture models all in a multilevel context.  Further modeling options include non-linear and smooth terms, auto-correlation structures, censored data, meta-analytic standard errors, and quite a few more.  In addition, all parameters of the response distribution can be predicted in order to perform distributional regression.  Prior specifications are flexible and explicitly encourage users to apply prior distributions that actually reflect their beliefs.  Model fit can easily be assessed and compared with posterior predictive checks and leave-one-out cross-validation.  References: B??rkner (2017) <doi:10.18637/jss.v080.i01>; B??rkner (2018) <doi:10.32614/RJ-2018-017>; Carpenter et al. (2017) <doi:10.18637/jss.v076.i01>.")
-    (license gpl2)))
-
-
-;; =============================================================================
-;; LANGUAGESERVER
-
-(define-public r-xptr
-  (package
-    (name "r-xptr")
-    (version "1.1.2")
-    (source
-      (origin
-        (method url-fetch)
-        (uri (cran-uri "xptr" version))
-        (sha256
-          (base32
-            "19zmzawp4mprwbcq2ajwwmmnf8vgnrkn86m246gz5f7rxzqz0vk3"))))
-    (properties `((upstream-name . "xptr")))
-    (build-system r-build-system)
-    (home-page "https://randy3k.github.io/xptr/")
-    (synopsis "Manipulating External Pointer")
-    (description
-      "There is limited native support for external pointers in the R interface.  This package provides some basic tools to verify, create and modify 'externalptr' objects.")
-    (license expat)))
-
-(define-public r-collections
-  (package
-    (name "r-collections")
-    (version "0.2.4")
-    (source
-      (origin
-        (method url-fetch)
-        (uri (cran-uri "collections" version))
-        (sha256
-          (base32
-            "1ar7jmlf42fsfgiqiyxhackrkf7mc0l24fbhsan0wv85dlv0qngw"))))
-    (properties `((upstream-name . "collections")))
-    (build-system r-build-system)
-    (propagated-inputs `(("r-xptr" ,r-xptr)))
-    (home-page
-      "https://randy3k.github.io/collections")
-    (synopsis
-      "High Performance Container Data Types")
-    (description
-      "This package provides high performance container data types such as Queue, Stack, Deque, Dict and OrderedDict.  Benchmarks <https://randy3k.github.io/collections/articles/benchmark.html> have shown that these containers are asymptotically more efficient than those offered by other packages.")
-    (license expat)))
-
-(define-public r-languageserver
-  (package
-    (name "r-languageserver")
-    (version "0.3.4")
-    (source
-      (origin
-        (method url-fetch)
-        (uri (cran-uri "languageserver" version))
-        (sha256
-          (base32
-            "1l9vwlc19kj4zavhxsh04iidndjh28fj8qc1dm6187hb755dfjpw"))))
-    (properties
-      `((upstream-name . "languageserver")))
-    (build-system r-build-system)
-    (propagated-inputs
-      `(("r-callr" ,r-callr)
-        ("r-collections" ,r-collections)
-        ("r-desc" ,r-desc)
-        ("r-fs" ,r-fs)
-        ("r-jsonlite" ,r-jsonlite)
-        ("r-lintr" ,r-lintr)
-        ("r-r6" ,r-r6)
-        ("r-readr" ,r-readr)
-        ("r-repr" ,r-repr)
-        ("r-stringr" ,r-stringr)
-        ("r-styler" ,r-styler)
-        ("r-xml2" ,r-xml2)
-        ("r-xmlparsedata" ,r-xmlparsedata)))
-    (home-page
-      "https://github.com/REditorSupport/languageserver")
-    (synopsis "Language Server Protocol")
-    (description
-      "An implementation of the Language Server Protocol for R.  The Language Server protocol is used by an editor client to integrate features like auto completion.  See <https://microsoft.github.io/language-server-protocol> for details.")
-    (license expat)))
-
-
-
-;; =============================================================================
-;; TIDYBAYES
-
-(define-public r-svunit
-  (package
-    (name "r-svunit")
-    (version "0.7-12")
-    (source
-      (origin
-        (method url-fetch)
-        (uri (cran-uri "svUnit" version))
-        (sha256
-          (base32
-            "16iiryj3v34zbnk1x05g30paza7al1frqx52fkw8ka61icizsrf5"))))
-    (properties `((upstream-name . "svUnit")))
-    (build-system r-build-system)
-    (home-page "http://www.sciviews.org/SciViews-R")
-    (synopsis "SciViews GUI API - Unit testing")
-    (description
-      "This package provides a complete unit test system and functions to implement its GUI part")
-    (license gpl2)))
-
-(define-public r-arrayhelpers
-  (package
-    (name "r-arrayhelpers")
-    (version "1.1-0")
-    (source
-      (origin
-        (method url-fetch)
-        (uri (cran-uri "arrayhelpers" version))
-        (sha256
-          (base32
-            "02rl530qxi1idiqpmzg5wr9vl5c7phizhpj64k5pn8xq9zfxbpaz"))))
-    (properties `((upstream-name . "arrayhelpers")))
-    (build-system r-build-system)
-    (propagated-inputs `(("r-svunit" ,r-svunit)))
-    (home-page
-      "http://arrayhelpers.r-forge.r-project.org/")
-    (synopsis "Convenience Functions for Arrays")
-    (description
-      "Some convenient functions to work with arrays.")
-    (license (list gpl2+ gpl3+))))
-
-(define-public r-hdinterval
-  (package
-    (name "r-hdinterval")
-    (version "0.2.0")
-    (source
-      (origin
-        (method url-fetch)
-        (uri (cran-uri "HDInterval" version))
-        (sha256
-          (base32
-            "1y51q0dwav3x7c0vp571v89vq1a5mivsxsyahqrv1la12zw0m7il"))))
-    (properties `((upstream-name . "HDInterval")))
-    (build-system r-build-system)
-    (home-page
-      "https://cran.r-project.org/web/packages/HDInterval")
-    (synopsis
-      "Highest (Posterior) Density Intervals")
-    (description
-      "This package provides a generic function and a set of methods to calculate highest density intervals for a variety of classes of objects which can specify a probability density distribution, including MCMC output, fitted density objects, and functions.")
-    (license gpl3)))
-
-(define-public r-tidybayes
-  (package
-    (name "r-tidybayes")
-    (version "2.0.2")
-    (source
-      (origin
-        (method url-fetch)
-        (uri (cran-uri "tidybayes" version))
-        (sha256
-          (base32
-            "1hwblvis75n2dvbnp955qsb7wb4cd2q6wfwvkm2ma5piygi0zrh2"))))
-    (properties `((upstream-name . "tidybayes")))
-    (build-system r-build-system)
-    (propagated-inputs
-      `(("r-arrayhelpers" ,r-arrayhelpers)
-        ("r-coda" ,r-coda)
-        ("r-dplyr" ,r-dplyr)
-        ("r-forcats" ,r-forcats)
-        ("r-ggplot2" ,r-ggplot2)
-        ("r-hdinterval" ,r-hdinterval)
-        ("r-magrittr" ,r-magrittr)
-        ("r-plyr" ,r-plyr)
-        ("r-purrr" ,r-purrr)
-        ("r-rlang" ,r-rlang)
-        ("r-scales" ,r-scales)
-        ("r-tibble" ,r-tibble)
-        ("r-tidyr" ,r-tidyr)
-        ("r-tidyselect" ,r-tidyselect)))
-    (native-inputs `(("r-knitr" ,r-knitr)))
-    (home-page "http://mjskay.github.io/tidybayes")
-    (synopsis
-      "Tidy Data and 'Geoms' for Bayesian Models")
-    (description
-      "Compose data for and extract, manipulate, and visualize posterior draws from Bayesian models ('JAGS', 'Stan', 'rstanarm', 'brms', 'MCMCglmm', 'coda', ...) in a tidy data format.  Functions are provided to help extract tidy data frames of draws from Bayesian models and that generate point summaries and intervals in a tidy format.  In addition, 'ggplot2' 'geoms' and 'stats' are provided for common visualization primitives like points with multiple uncertainty intervals, eye plots (intervals plus densities), and fit curves with multiple, arbitrary uncertainty bands.")
-    (license gpl3+)))
-
-;;;
-;;; MODELTIME & DEPENDENCIES
-;;;
-
-(define-public r-prophet
-  (package
-    (name "r-prophet")
-    (version "0.6.1")
-    (source
-      (origin
-        (method url-fetch)
-        (uri (cran-uri "prophet" version))
-        (sha256
-          (base32
-            "08b5h4c83143q33slsa7x46bxa98rm5dg251zsb7ixvn2v0zkhk1"))))
-    (properties `((upstream-name . "prophet")))
-    (build-system r-build-system)
-    (propagated-inputs
-      `(("r-bh" ,r-bh)
-        ("r-dplyr" ,r-dplyr)
-        ("r-dygraphs" ,r-dygraphs)
-        ("r-extradistr" ,r-extradistr)
-        ("r-ggplot2" ,r-ggplot2)
-        ("r-rcpp" ,r-rcpp)
-        ("r-rcppeigen" ,r-rcppeigen)
-        ("r-rlang" ,r-rlang)
-        ("r-rstan" ,r-rstan)
-        ("r-rstantools" ,r-rstantools)
-        ("r-scales" ,r-scales)
-        ("r-stanheaders" ,r-stanheaders)
-        ("r-tidyr" ,r-tidyr)
-        ("r-xts" ,r-xts)))
-    (native-inputs `(("r-knitr" ,r-knitr)))
-    (home-page "https://github.com/facebook/prophet")
-    (synopsis "Automatic Forecasting Procedure")
-    (description
-      "Implements a procedure for forecasting time series data based on an additive model where non-linear trends are fit with yearly, weekly, and daily seasonality, plus holiday effects.  It works best with time series that have strong seasonal effects and several seasons of historical data.  Prophet is robust to missing data and shifts in the trend, and typically handles outliers well.")
-    (license expat)))
-
-(define-public r-progressr
-  (package
-    (name "r-progressr")
-    (version "0.6.0")
-    (source
-      (origin
-        (method url-fetch)
-        (uri (cran-uri "progressr" version))
-        (sha256
-          (base32
-            "1cvb1llxz7ys4535dfl6hl3j07g24mcvkg0kl46v4nnl7ka4jx67"))))
-    (properties `((upstream-name . "progressr")))
-    (build-system r-build-system)
-    (propagated-inputs `(("r-digest" ,r-digest)))
-    (home-page
-      "https://github.com/HenrikBengtsson/progressr")
-    (synopsis
-      "A Inclusive, Unifying API for Progress Updates")
-    (description
-      "This package provides a minimal, unifying API for scripts and packages to report progress updates from anywhere including when using parallel processing.  The package is designed such that the developer can to focus on what progress should be reported on without having to worry about how to present it.  The end user has full control of how, where, and when to render these progress updates, e.g.  in the terminal using utils::txtProgressBar() or progress::progress_bar(), in a graphical user interface using utils::winProgressBar(), tcltk::tkProgressBar() or shiny::withProgress(), via the speakers using beep::beepr(), or on a file system via the size of a file.  Anyone can add additional, customized, progression handlers.  The 'progressr' package uses R's condition framework for signaling progress updated.  Because of this, progress can be reported from almost anywhere in R, e.g.  from classical for and while loops, from map-reduce APIs like the lapply() family of functions, 'purrr', 'plyr', and 'foreach'.  It will also work with parallel processing via the 'future' framework, e.g.  future.apply::future_lapply(), furrr::future_map(), and 'foreach' with 'doFuture'.  The package is compatible with Shiny applications.")
-    (license gpl3+)))
-
-(define-public r-janitor
-  (package
-    (name "r-janitor")
-    (version "2.0.1")
-    (source
-      (origin
-        (method url-fetch)
-        (uri (cran-uri "janitor" version))
-        (sha256
-          (base32
-            "1dy8dlvnxg057qxpd5lk30wcxa15vw95888ccd99sqra789llm3n"))))
-    (properties `((upstream-name . "janitor")))
-    (build-system r-build-system)
-    (propagated-inputs
-      `(("r-dplyr" ,r-dplyr)
-        ("r-lifecycle" ,r-lifecycle)
-        ("r-lubridate" ,r-lubridate)
-        ("r-magrittr" ,r-magrittr)
-        ("r-purrr" ,r-purrr)
-        ("r-rlang" ,r-rlang)
-        ("r-snakecase" ,r-snakecase)
-        ("r-stringi" ,r-stringi)
-        ("r-stringr" ,r-stringr)
-        ("r-tidyr" ,r-tidyr)
-        ("r-tidyselect" ,r-tidyselect)))
-    (native-inputs `(("r-knitr" ,r-knitr)))
-    (home-page "https://github.com/sfirke/janitor")
-    (synopsis
-      "Simple Tools for Examining and Cleaning Dirty Data")
-    (description
-      "The main janitor functions can: perfectly format data.frame column names; provide quick counts of variable combinations (i.e., frequency tables and crosstabs); and isolate duplicate records.  Other janitor functions nicely format the tabulation results.  These tabulate-and-report functions approximate popular features of SPSS and Microsoft Excel.  This package follows the principles of the \"tidyverse\" and works well with the pipe function %>%.  janitor was built with beginning-to-intermediate R users in mind and is optimized for user-friendliness.  Advanced R users can already do everything covered here, but with janitor they can do it faster and save their thinking for the fun stuff.")
-    (license expat)))
-
-(define-public r-sass
-  (package
-    (name "r-sass")
-    (version "0.2.0")
-    (source
-      (origin
-        (method url-fetch)
-        (uri (cran-uri "sass" version))
-        (sha256
-          (base32
-            "0qzrncsnp0zd8jyp4whss92m7llqsfccmp9p9r3gdc7hlq1amp3z"))))
-    (properties `((upstream-name . "sass")))
-    (build-system r-build-system)
-    (propagated-inputs
-      `(("r-digest" ,r-digest)
-        ("r-fs" ,r-fs)
-        ("r-htmltools" ,r-htmltools)
-        ("r-rlang" ,r-rlang)))
-    (native-inputs `(("r-knitr" ,r-knitr)))
-    (home-page "https://github.com/rstudio/sass")
-    (synopsis
-      "Syntactically Awesome Style Sheets ('Sass')")
-    (description
-      "An 'SCSS' compiler, powered by the 'LibSass' library.  With this, R developers can use variables, inheritance, and functions to generate dynamic style sheets.  The package uses the 'Sass CSS' extension language, which is stable, powerful, and CSS compatible.")
-    (license expat)))
-
-(define-public r-gt
-  (package
-    (name "r-gt")
-    (version "0.2.1")
-    (source
-      (origin
-        (method url-fetch)
-        (uri (cran-uri "gt" version))
-        (sha256
-          (base32
-            "081rx851dlkpx6ial6vlbc5fmzqk56sxr66j15yxihncm05b6h8h"))))
-    (properties `((upstream-name . "gt")))
-    (build-system r-build-system)
-    (propagated-inputs
-      `(("r-checkmate" ,r-checkmate)
-        ("r-commonmark" ,r-commonmark)
-        ("r-dplyr" ,r-dplyr)
-        ("r-fs" ,r-fs)
-        ("r-ggplot2" ,r-ggplot2)
-        ("r-glue" ,r-glue)
-        ("r-htmltools" ,r-htmltools)
-        ("r-magrittr" ,r-magrittr)
-        ("r-rlang" ,r-rlang)
-        ("r-sass" ,r-sass)
-        ("r-scales" ,r-scales)
-        ("r-stringr" ,r-stringr)
-        ("r-tibble" ,r-tibble)
-        ("r-tidyselect" ,r-tidyselect)))
-    (home-page "https://github.com/rstudio/gt")
-    (synopsis
-      "Easily Create Presentation-Ready Display Tables")
-    (description
-      "Build display tables from tabular data with an easy-to-use set of functions.  With its progressive approach, we can construct display tables with a cohesive set of table parts.  Table values can be formatted using any of the included formatting functions.  Footnotes and cell styles can be precisely added through a location targeting system.  The way in which 'gt' handles things for you means that you don't often have to worry about the fine details.")
-    (license expat)))
-
-(define-public r-reactr
-  (package
-    (name "r-reactr")
-    (version "0.4.2")
-    (source
-      (origin
-        (method url-fetch)
-        (uri (cran-uri "reactR" version))
-        (sha256
-          (base32
-            "11rahxskch0r5hlqs7iy285dlhrmzm4vl18kbakx4jggwjqh61f5"))))
-    (properties `((upstream-name . "reactR")))
-    (build-system r-build-system)
-    (propagated-inputs
-      `(("r-htmltools" ,r-htmltools)))
-    (native-inputs `(("r-knitr" ,r-knitr)))
-    (home-page "https://github.com/react-R/reactR")
-    (synopsis "React Helpers")
-    (description
-      "Make it easy to use 'React' in R with 'htmlwidget' scaffolds, helper dependency functions, an embedded 'Babel' 'transpiler', and examples.")
-    (license expat)))
-
-(define-public r-reactable
-  (package
-    (name "r-reactable")
-    (version "0.2.0")
-    (source
-      (origin
-        (method url-fetch)
-        (uri (cran-uri "reactable" version))
-        (sha256
-          (base32
-            "037d3za9r9pa5isn7aqi4jzw43ki6i8aq9vir3fmhzwn6lja3z72"))))
-    (properties `((upstream-name . "reactable")))
-    (build-system r-build-system)
-    (propagated-inputs
-      `(("r-digest" ,r-digest)
-        ("r-htmltools" ,r-htmltools)
-        ("r-htmlwidgets" ,r-htmlwidgets)
-        ("r-jsonlite" ,r-jsonlite)
-        ("r-reactr" ,r-reactr)))
-    (home-page "https://glin.github.io/reactable")
-    (synopsis
-      "Interactive Data Tables Based on 'React Table'")
-    (description
-      "Interactive data tables for R, based on the 'React Table' JavaScript library.  Provides an HTML widget that can be used in 'R Markdown' documents and 'Shiny' applications, or viewed from an R console.")
-    (license expat)))
-
-(define-public r-anytime
-  (package
-    (name "r-anytime")
-    (version "0.3.7")
-    (source
-      (origin
-        (method url-fetch)
-        (uri (cran-uri "anytime" version))
-        (sha256
-          (base32
-            "0vkckxaq1ga73iszwr4lyf12c1cann1w9lhflz4p3xdgx468fzb9"))))
-    (properties `((upstream-name . "anytime")))
-    (build-system r-build-system)
-    (propagated-inputs
-      `(("r-bh" ,r-bh) ("r-rcpp" ,r-rcpp)))
-    (home-page
-      "http://dirk.eddelbuettel.com/code/anytime.html")
-    (synopsis
-      "Anything to 'POSIXct' or 'Date' Converter")
-    (description
-      "Convert input in any one of character, integer, numeric, factor, or ordered type into 'POSIXct' (or 'Date') objects, using one of a number of predefined formats, and relying on Boost facilities for date and time parsing.")
-    (license gpl2+)))
-
-(define-public r-warp
-  (package
-    (name "r-warp")
-    (version "0.1.0")
-    (source
-      (origin
-        (method url-fetch)
-        (uri (cran-uri "warp" version))
-        (sha256
-          (base32
-            "16bmym91h0sbbh4iqasqs0f4kp3jqlm3sqgc356mznhxwnsm8dm2"))))
-    (properties `((upstream-name . "warp")))
-    (build-system r-build-system)
-    (native-inputs `(("r-knitr" ,r-knitr)))
-    (home-page
-      "https://github.com/DavisVaughan/warp")
-    (synopsis "Group Dates")
-    (description
-      "Tooling to group dates by a variety of periods including: yearly, monthly, by second, by week of the month, and more.  The groups are defined in such a way that they also represent the distance between dates in terms of the period.  This extracts valuable information that can be used in further calculations that rely on a specific temporal spacing between observations.")
-    (license expat)))
-
-(define-public r-slider
-  (package
-    (name "r-slider")
-    (version "0.1.4")
-    (source
-      (origin
-        (method url-fetch)
-        (uri (cran-uri "slider" version))
-        (sha256
-          (base32
-            "0waa3s6fbr0h7gpap1akvdh3sg5ib4c67rkg91b6y6fpqjrr70xc"))))
-    (properties `((upstream-name . "slider")))
-    (build-system r-build-system)
-    (propagated-inputs
-      `(("r-glue" ,r-glue)
-        ("r-rlang" ,r-rlang)
-        ("r-vctrs" ,r-vctrs)
-        ("r-warp" ,r-warp)))
-    (native-inputs `(("r-knitr" ,r-knitr)))
-    (home-page
-      "https://github.com/DavisVaughan/slider")
-    (synopsis "Sliding Window Functions")
-    (description
-      "This package provides type-stable rolling window functions over any R data type.  Cumulative and expanding windows are also supported.  For more advanced usage, an index can be used as a secondary vector that defines how sliding windows are to be created.")
-    (license expat)))
-
-(define-public r-padr
-  (package
-    (name "r-padr")
-    (version "0.5.2")
-    (source
-      (origin
-        (method url-fetch)
-        (uri (cran-uri "padr" version))
-        (sha256
-          (base32
-            "0cnsycwd9zpz4apk7rizgyjrg072kqyk4p4q5grdlfzv73ivr7ab"))))
-    (properties `((upstream-name . "padr")))
-    (build-system r-build-system)
-    (propagated-inputs
-      `(("r-dplyr" ,r-dplyr)
-        ("r-lubridate" ,r-lubridate)
-        ("r-rcpp" ,r-rcpp)
-        ("r-rlang" ,r-rlang)))
-    (native-inputs `(("r-knitr" ,r-knitr)))
-    (home-page "https://github.com/EdwinTh/padr")
-    (synopsis
-      "Quickly Get Datetime Data Ready for Analysis")
-    (description
-      "Transforms datetime data into a format ready for analysis.  It offers two core functionalities; aggregating data to a higher level interval (thicken) and imputing records where observations were absent (pad).")
-    (license expat)))
-
-(define-public r-timetk
-  (package
-    (name "r-timetk")
-    (version "2.1.0")
-    (source
-      (origin
-        (method url-fetch)
-        (uri (cran-uri "timetk" version))
-        (sha256
-          (base32
-            "0k1vyv2z48l4ql8isnrzlp4gz3h9j6cscccvbszbayy911bq285m"))))
-    (properties `((upstream-name . "timetk")))
-    (build-system r-build-system)
-    (propagated-inputs
-      `(("r-anytime" ,r-anytime)
-        ("r-assertthat" ,r-assertthat)
-        ("r-dplyr" ,r-dplyr)
-        ("r-forcats" ,r-forcats)
-        ("r-forecast" ,r-forecast)
-        ("r-ggplot2" ,r-ggplot2)
-        ("r-hms" ,r-hms)
-        ("r-lazyeval" ,r-lazyeval)
-        ("r-lubridate" ,r-lubridate)
-        ("r-padr" ,r-padr)
-        ("r-plotly" ,r-plotly)
-        ("r-purrr" ,r-purrr)
-        ("r-readr" ,r-readr)
-        ("r-recipes" ,r-recipes)
-        ("r-rlang" ,r-rlang)
-        ("r-rsample" ,r-rsample)
-        ("r-slider" ,r-slider)
-        ("r-stringi" ,r-stringi)
-        ("r-stringr" ,r-stringr)
-        ("r-tibble" ,r-tibble)
-        ("r-tidyr" ,r-tidyr)
-        ("r-tidyselect" ,r-tidyselect)
-        ("r-timedate" ,r-timedate)
-        ("r-xts" ,r-xts)
-        ("r-zoo" ,r-zoo)))
-    (native-inputs `(("r-knitr" ,r-knitr)))
-    (home-page
-      "https://github.com/business-science/timetk")
-    (synopsis
-      "A Tool Kit for Working with Time Series in R")
-    (description
-      " Easy visualization, wrangling, and preprocessing of time series data for forecasting and machine learning prediction.  Methods discussed herein are commonplace in machine learning, and have been cited in various literature.  Refer to \"Calendar Effects\" in papers such as Taieb, Souhaib Ben. \"Machine learning strategies for multi-step-ahead time series forecasting.\" Universit Libre de Bruxelles, Belgium (2014): 75-86. <http://souhaib-bentaieb.com/pdf/2014_phd.pdf>.")
-    (license gpl3+)))
-
-(define-public r-modeltime
-  (package
-    (name "r-modeltime")
-    (version "0.0.2")
-    (source
-      (origin
-        (method url-fetch)
-        (uri (cran-uri "modeltime" version))
-        (sha256
-          (base32
-            "0y52v5n0cv9x3ck25kgdf8sad02v2gida982ahrcm0vjxqxqm5ma"))))
-    (properties `((upstream-name . "modeltime")))
-    (build-system r-build-system)
-    (propagated-inputs
-      `(("r-dials" ,r-dials)
-        ("r-dplyr" ,r-dplyr)
-        ("r-forcats" ,r-forcats)
-        ("r-forecast" ,r-forecast)
-        ("r-ggplot2" ,r-ggplot2)
-        ("r-glue" ,r-glue)
-        ("r-gt" ,r-gt)
-        ("r-hardhat" ,r-hardhat)
-        ("r-janitor" ,r-janitor)
-        ("r-magrittr" ,r-magrittr)
-        ("r-parsnip" ,r-parsnip)
-        ("r-plotly" ,r-plotly)
-        ("r-progressr" ,r-progressr)
-        ("r-prophet" ,r-prophet)
-        ("r-purrr" ,r-purrr)
-        ("r-reactable" ,r-reactable)
-        ("r-rlang" ,r-rlang)
-        ("r-scales" ,r-scales)
-        ("r-stringr" ,r-stringr)
-        ("r-tibble" ,r-tibble)
-        ("r-tidyr" ,r-tidyr)
-        ("r-timetk" ,r-timetk)
-        ("r-workflows" ,r-workflows)
-        ("r-xgboost" ,r-xgboost)
-        ("r-yardstick" ,r-yardstick)))
-    (native-inputs `(("r-knitr" ,r-knitr)))
-    (home-page
-      "https://github.com/business-science/modeltime")
-    (synopsis
-      "The Tidymodels Extension for Time Series Modeling")
-    (description
-      " The time series forecasting framework for use with the 'tidymodels' ecosystem.  Models include ARIMA, Exponential Smoothing, and additional time series models from the 'forecast' and 'prophet' packages.  Refer to \"Forecasting Principles & Practice, Second edition\" (<https://otexts.com/fpp2/>).  Refer to \"Prophet: forecasting at scale\" (<https://research.fb.com/blog/2017/02/prophet-forecasting-at-scale/>.).")
-    (license expat)))
