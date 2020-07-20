@@ -52,7 +52,7 @@
 (define-public r-minimal-mee1
   (package
     (inherit (@ (gnu packages statistics) r-minimal))
-    (version "4.1.1-mee1")
+    (version "4.99.99-mee1")
     (inputs `(("gfortran" ,gfortran-9)
               ,@(alist-delete "gfortran"
                               (package-inputs (@ (gnu packages statistics) r-minimal)))))))
@@ -60,7 +60,7 @@
 (define-public r-mee1
   (package
     (inherit (@ (gnu packages statistics) r))
-    (version "4.1.1-mee1")
+    (version "4.99.99-mee1")
     (inputs `(("r-minimal" ,r-minimal-mee1)
               ,@(alist-delete "r-minimal"
                               (package-inputs (@ (gnu packages statistics) r)))))))
@@ -68,7 +68,7 @@
 (define-public r-rstan-mee1
   (package
     (inherit (@ (gnu packages cran) r-rstan))
-    (version "2.19.3-mee1")
+    (version "2.99.99-mee1")
     (propagated-inputs `(("gcc-toolchain" ,gcc-toolchain)
                          ("make" ,gnu-make)
                          ,@(package-propagated-inputs (@ (gnu packages cran) r-rstan))))))
@@ -76,7 +76,7 @@
 (define-public r-rstanarm-mee1
   (package
     (inherit (@ (gnu packages cran) r-rstanarm))
-    (version "2.19.3-mee1")
+    (version "2.99.99-mee1")
     (propagated-inputs
      `(("r-rstan" ,r-rstan-mee1)
        ("r-shinystan" ,r-shinystan-mee1)
@@ -89,7 +89,7 @@
 (define-public r-shinystan-mee1
   (package
     (inherit (@ (gnu packages cran) r-shinystan))
-    (version "2.5.0-mee1")
+    (version "2.99.99-mee1")
     (propagated-inputs
      `(("r-rstan" ,r-rstan-mee1)
        ,@(alist-delete "r-rstan"
@@ -98,7 +98,7 @@
 (define-public r-brms-mee1
   (package
    (inherit (@ (gnu packages cran) r-brms))
-   (version "2.13.0-mee1")
+   (version "2.99.99-mee1")
    (propagated-inputs
     `(("r-rstan" ,r-rstan-mee1)
       ("r-shinystan" ,r-shinystan-mee1)
@@ -201,7 +201,7 @@ shared library, or the legacy 3.14/3.15 branch of V8.")
 (define-public emacs-ess-next
   (package
    (name "emacs-ess-next")
-   (version "18.10.3snapshot") ;; from ./VERSION as of 2020 on master
+   (version "18.10.3snapshot") ;; from ./VERSION as of 2020-mar on master
    (source (origin
             (method git-fetch)
             (uri (git-reference (url "https://github.com/emacs-ess/ESS/")
