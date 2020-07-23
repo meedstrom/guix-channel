@@ -1763,3 +1763,117 @@ various statistical analysis programs such as R, Julia, and JAGS.")
     (description
       "Compose data for and extract, manipulate, and visualize posterior draws from Bayesian models ('JAGS', 'Stan', 'rstanarm', 'brms', 'MCMCglmm', 'coda', ...) in a tidy data format.  Functions are provided to help extract tidy data frames of draws from Bayesian models and that generate point summaries and intervals in a tidy format.  In addition, 'ggplot2' 'geoms' and 'stats' are provided for common visualization primitives like points with multiple uncertainty intervals, eye plots (intervals plus densities), and fit curves with multiple, arbitrary uncertainty bands.")
     (license gpl3+)))
+
+
+;;; KERAS
+;;;
+
+(define-public r-tfruns
+  (package
+    (name "r-tfruns")
+    (version "1.4")
+    (source
+      (origin
+        (method url-fetch)
+        (uri (cran-uri "tfruns" version))
+        (sha256
+          (base32
+            "1mqv5m13qm1dqz0622jd5ayb3nk76lfa657y2hyqv261flxizhvg"))))
+    (properties `((upstream-name . "tfruns")))
+    (build-system r-build-system)
+    (propagated-inputs
+      `(("r-base64enc" ,r-base64enc)
+        ("r-config" ,r-config)
+        ("r-jsonlite" ,r-jsonlite)
+        ("r-magrittr" ,r-magrittr)
+        ("r-reticulate" ,r-reticulate)
+        ("r-rlang" ,r-rlang)
+        ("r-rstudioapi" ,r-rstudioapi)
+        ("r-tidyselect" ,r-tidyselect)
+        ("r-whisker" ,r-whisker)
+        ("r-yaml" ,r-yaml)))
+    (native-inputs `(("r-knitr" ,r-knitr)))
+    (home-page "https://github.com/rstudio/tfruns")
+    (synopsis "Training Run Tools for 'TensorFlow'")
+    (description
+      "Create and manage unique directories for each 'TensorFlow' training run.  Provides a unique, time stamped directory for each run along with functions to retrieve the directory of the latest run or latest several runs.")
+    (license asl2.0)))
+
+(define-public r-config
+  (package
+    (name "r-config")
+    (version "0.3")
+    (source
+      (origin
+        (method url-fetch)
+        (uri (cran-uri "config" version))
+        (sha256
+          (base32
+            "0l67nfpm42ssnk0bl4jmq6bibz8hawgfgh2s14s5c8mnimv6mpjs"))))
+    (properties `((upstream-name . "config")))
+    (build-system r-build-system)
+    (propagated-inputs `(("r-yaml" ,r-yaml)))
+    (native-inputs `(("r-knitr" ,r-knitr)))
+    (home-page "https://github.com/rstudio/config")
+    (synopsis
+      "Manage Environment Specific Configuration Values")
+    (description
+      "Manage configuration values across multiple environments (e.g.  development, test, production).  Read values using a function that determines the current environment and returns the appropriate value.")
+    (license gpl3)))
+
+(define-public r-tensorflow
+  (package
+    (name "r-tensorflow")
+    (version "2.2.0")
+    (source
+      (origin
+        (method url-fetch)
+        (uri (cran-uri "tensorflow" version))
+        (sha256
+          (base32
+            "0dz47npinbz198h1ps4wap7x9dvw2vrgiw867wj1h3xkjs2dfv5m"))))
+    (properties `((upstream-name . "tensorflow")))
+    (build-system r-build-system)
+    (inputs `(("tensorflow" ,tensorflow)))
+    (propagated-inputs
+      `(("r-config" ,r-config)
+        ("r-jsonlite" ,r-jsonlite)
+        ("r-processx" ,r-processx)
+        ("r-reticulate" ,r-reticulate)
+        ("r-rstudioapi" ,r-rstudioapi)
+        ("r-tfruns" ,r-tfruns)
+        ("r-yaml" ,r-yaml)))
+    (home-page
+      "https://github.com/rstudio/tensorflow")
+    (synopsis "R Interface to 'TensorFlow'")
+    (description
+      "Interface to 'TensorFlow' <https://www.tensorflow.org/>, an open source software library for numerical computation using data flow graphs.  Nodes in the graph represent mathematical operations, while the graph edges represent the multidimensional data arrays (tensors) communicated between them.  The flexible architecture allows you to deploy computation to one or more 'CPUs' or 'GPUs' in a desktop, server, or mobile device with a single 'API'. 'TensorFlow' was originally developed by researchers and engineers working on the Google Brain Team within Google's Machine Intelligence research organization for the purposes of conducting machine learning and deep neural networks research, but the system is general enough to be applicable in a wide variety of other domains as well.")
+    (license asl2.0)))
+
+(define-public r-keras
+  (package
+    (name "r-keras")
+    (version "2.3.0.0")
+    (source
+      (origin
+        (method url-fetch)
+        (uri (cran-uri "keras" version))
+        (sha256
+          (base32
+            "0byzg6qpcfj852qlbav8cwhrqvkpkg0zig9brhw2sibljwy8x5ik"))))
+    (properties `((upstream-name . "keras")))
+    (build-system r-build-system)
+    (propagated-inputs
+      `(("r-generics" ,r-generics)
+        ("r-magrittr" ,r-magrittr)
+        ("r-r6" ,r-r6)
+        ("r-reticulate" ,r-reticulate)
+        ("r-tensorflow" ,r-tensorflow)
+        ("r-tfruns" ,r-tfruns)
+        ("r-zeallot" ,r-zeallot)))
+    (native-inputs `(("r-knitr" ,r-knitr)))
+    (home-page "https://keras.rstudio.com")
+    (synopsis "R Interface to 'Keras'")
+    (description
+      "Interface to 'Keras' <https://keras.io>, a high-level neural networks 'API'. 'Keras' was developed with a focus on enabling fast experimentation, supports both convolution based networks and recurrent networks (as well as combinations of the two), and runs seamlessly on both 'CPU' and 'GPU' devices.")
+    (license expat)))
