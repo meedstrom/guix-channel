@@ -33,6 +33,7 @@
   #:use-module (gnu packages texinfo)
   #:use-module (gnu packages commencement)
   #:use-module (gnu packages gcc)
+  #:use-module (gnu packages machine-learning)
   #:use-module (srfi srfi-1)
   )
 
