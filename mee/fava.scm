@@ -1,26 +1,22 @@
 (define-module (mee fava)
   #:use-module (guix packages)
   #:use-module (guix download)
-  #:use-module (guix git-download)
-  #:use-module (guix licenses)
+  #:use-module ((guix licenses) #:prefix license:)
   #:use-module (guix gexp)
   #:use-module (guix utils)
-  #:use-module (guix build-system gnu)
-  #:use-module (guix build-system r)
   #:use-module (guix build-system python)
   #:use-module (gnu packages base)
   #:use-module (gnu packages python)
   #:use-module (gnu packages python-xyz)
   #:use-module (gnu packages python-web)
-  #:use-module (gnu packages statistics)
-  #:use-module (gnu packages cran)
-  #:use-module (gnu packages emacs)
-  #:use-module (gnu packages emacs-xyz)
-  #:use-module (gnu packages perl)
-  #:use-module (gnu packages texinfo)
-  #:use-module (gnu packages commencement)
-  #:use-module (gnu packages gcc)
-  #:use-module (gnu packages machine-learning)
+  #:use-module (gnu packages python-crypto)
+  #:use-module (gnu packages python-check)
+  #:use-module (gnu packages finance)
+  #:use-module (gnu packages time)
+  #:use-module (gnu packages xml)
+  #:use-module (gnu packages protobuf)
+  #:use-module (gnu packages check)
+  #:use-module (gnu packages compression)
   #:use-module (srfi srfi-1)
   )
 
@@ -37,6 +33,8 @@
             "1lg255r2qfmaln7dgr3hlb0kg4m07m1n95ppm6qjanz8q8pmjc25"))))
     (build-system python-build-system)
     (native-inputs `(("unzip" ,unzip)))
+    ;; A test fails because it tries to import ctypes.wintypes, which are only available on Windows.
+    (arguments '(#:tests? #f))
     (home-page "http://ipython.org/pyreadline.html")
     (synopsis
       "A python implmementation of GNU readline.")
@@ -341,10 +339,11 @@
           (base32
             "19xk6mnldxd7980p91knzsk923lzii9ysqiy1ipgdcl2fh73ddhq"))))
     (build-system python-build-system)
-    (propagated-inputs `(("python-six" ,python-six)))
+    (propagated-inputs `(("python-six" ,python-six)
+                         ("python-setuptools-scm" ,python-setuptools-scm)))
     (native-inputs
-      `(("python-pytest" ,python-pytest)
-        ("python-pytest-checkdocs"
+     `(("python-pytest" ,python-pytest)
+       ("python-pytest-checkdocs"
          ,python-pytest-checkdocs)
         ("python-pytest-flake8" ,python-pytest-flake8)))
     (home-page
@@ -583,7 +582,8 @@
             "1sn12y4fw1qki5gxy9wg45gmdrxhrndwfndfjxhpiky3mwh1lp4y"))))
     (build-system python-build-system)
     (propagated-inputs
-      `(("python-requests" ,python-requests)
+     `(("python-requests" ,python-requests)
+       ("python-pbr" ,python-pbr)
         ("python-urllib3" ,python-urllib3)))
     (home-page
       "https://github.com/msabramo/requests-unixsocket")
@@ -687,8 +687,10 @@
             "1iasz23zrzjgbak8jiq12i4zmkk8f6dmcdhfxz8m2q03agcidc7x"))))
     (build-system python-build-system)
     (propagated-inputs
-      `(("python-coverage" ,python-coverage)
-        ("python-pytest" ,python-pytest)))
+     `(("python-coverage" ,python-coverage)
+       ("python-tox" ,python-tox)
+       ("python-unittest-mixins" ,python-unittest-mixins)
+       ("python-pytest" ,python-pytest)))
     (home-page "https://testmon.org")
     (synopsis
       "selects tests affected by changed files and methods")
@@ -708,6 +710,10 @@
           (base32
             "0ayqs59yz7mqnlz8g9ggik69h1n5j9p5l6ywa74gn8rs42nbl6qz"))))
     (build-system python-build-system)
+    (propagated-inputs
+     `(("python-psutil" ,python-psutil)
+       ("python-mock" ,python-mock)
+       ))
     (home-page
       "https://www.github.com/sethmlarson/selectors2")
     (synopsis
@@ -757,7 +763,9 @@
             "1ciwa99fnz3ngbsvcjvxqz4k1vwfmvpxaj7qf5vxkx0awvczhsyd"))))
     (build-system python-build-system)
     (propagated-inputs
-      `(("python-pytest-black" ,python-pytest-black)))
+     `(("python-pytest-black" ,python-pytest-black)
+       ("python-setuptools" ,python-setuptools)
+       ("python-setuptools-scm" ,python-setuptools-scm)))
     (native-inputs
       `(("python-pytest" ,python-pytest)
         ("python-pytest-checkdocs"
@@ -811,7 +819,8 @@
             "1x4l7d4mvr94nfzh4zgvkdcglvvagbx2y6ryw2ijql8p66zc9vcz"))))
     (build-system python-build-system)
     (propagated-inputs
-      `(("python-more-itertools" ,python-more-itertools)))
+     `(("python-setuptools-scm" ,python-setuptools-scm)
+       ("python-more-itertools" ,python-more-itertools)))
     (native-inputs
       `(("python-jaraco.classes" ,python-jaraco.classes)
         ("python-pytest" ,python-pytest)
@@ -851,7 +860,7 @@
       `(("python-codecov" ,python-codecov)
         ("python-colorama" ,python-colorama)
         ("python-coverage" ,python-coverage)
-        ("python-futures" ,python-futures)
+        ("python2-futures" ,python2-futures)
         ("python-jaraco.context" ,python-jaraco.context)
         ("python-jaraco.text" ,python-jaraco.text)
         ("python-portend" ,python-portend)
@@ -891,7 +900,7 @@
     (build-system python-build-system)
     (propagated-inputs
       `(("python-babel" ,python-babel)
-        ("python-beancount" ,python-beancount)
+        ("python-beancount" ,beancount)
         ("python-cheroot" ,python-cheroot)
         ("python-click" ,python-click)
         ("python-flask" ,python-flask)
@@ -908,3 +917,23 @@
     (description
       "Web interface for the accounting tool Beancount.")
     (license license:expat)))
+
+(define-public python-unittest-mixins
+  (package
+    (name "python-unittest-mixins")
+    (version "1.6")
+    (source
+      (origin
+        (method url-fetch)
+        (uri (pypi-uri "unittest-mixins" version))
+        (sha256
+          (base32
+            "01r5qn9nbjpkplg3y2xiij38q1s6237d0wbdpfvj81wz16z3ldh5"))))
+    (build-system python-build-system)
+    (propagated-inputs `(("python-six" ,python-six)))
+    (home-page
+      "https://github.com/nedbat/unittest-mixins")
+    (synopsis "Helpful mixins for unittest classes")
+    (description
+      "Helpful mixins for unittest classes")
+    (license license:asl2.0)))
