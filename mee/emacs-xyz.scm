@@ -41,55 +41,10 @@
     (build-system emacs-build-system)
     (propagated-inputs
       `(("emacs-dash" ,emacs-dash)))
-    (home-page "https://github.com/ch11ng/xelb")
-    (synopsis "X protocol Emacs Lisp Binding")
-    (description
-     #f)
+    (home-page #f)
+    (synopsis #f)
+    (description #f)
     (license license:gpl3+)))
-
-(define-public emacs-no-x-toolkit
-  (let ((commit "4645430b9287c3f5ae9863d465a5dd4158e313a9")
-        (revision "0")
-        (emacs-version "28.0.50"))
-    (package
-     (inherit emacs-next)
-     (name "emacs-no-x-toolkit")
-     (version (git-version emacs-version revision commit))
-     (source (origin (inherit (package-source emacs-next))
-                     (uri (git-reference
-                           (url "https://git.savannah.gnu.org/git/emacs.git")
-                           (commit commit)))
-                     (sha256 (base32 "1fvffxz1pw894c6zhixkr7xdfps01h83jh18nyxx1v84hrr6smg5"))
-                     (file-name (git-file-name name version))
-                     ))
-     (inputs (append `(("inotify-tools" ,inotify-tools))
-                     (alist-delete "gtk+" (package-inputs emacs-next))))
-     (arguments
-      `(,@(substitute-keyword-arguments (package-arguments emacs-next)
-                                        ((#:configure-flags cf)
-                                         `(cons "--with-x-toolkit=no" ,cf))))))))
-
-;; (define-public emacs-helm-core
-;;   (package
-;;     (name "emacs-helm-core")
-;;     (version "20200429.1931")
-;;     (source
-;;       (origin
-;;         (method url-fetch)
-;;         (uri (string-append
-;;                "https://melpa.org/packages/helm-core-"
-;;                version
-;;                ".tar"))
-;;         (sha256
-;;           (base32
-;;             "1pzsjg12flynvygsgdyi0gsbhf27dghjhzcssg9cm25shhsl7c0x"))))
-;;     (build-system emacs-build-system)
-;;     (propagated-inputs
-;;       `(("emacs-async" ,emacs-async)))
-;;     (home-page "https://emacs-helm.github.io/helm/")
-;;     (synopsis "Development files for Helm")
-;;     (description "No description available.")
-;;     (license #f)))
 
 (define-public emacs-artbollocks-mode
   (package
@@ -129,27 +84,6 @@ you you might need to force re-fontification initially:
 ")
     (license #f)))
 
-(define-public emacs-xelb-next
-  (package
-    (name "emacs-xelb-next")
-    (version "0.18-delta")
-    (source
-     (origin (method git-fetch)
-             (uri (git-reference (url "https://github.com/ch11ng/xelb")
-                                 (commit "0f10c95")))
-             (file-name (git-file-name name version))
-        (sha256
-          (base32
-           "0vfvl3ygccdwsm15hjlbx4hail83i8gakk1p85ywplfmm1b8hraz"))))
-    (build-system emacs-build-system)
-    (propagated-inputs
-      `(("emacs-cl-generic" ,emacs-cl-generic)))
-    (home-page "https://github.com/ch11ng/xelb")
-    (synopsis "X protocol Emacs Lisp Binding")
-    (description
-     #f)
-    (license license:gpl3+)))
-
 (define-public emacs-hardcore-mode
   (package
     (name "emacs-hardcore-mode")
@@ -172,8 +106,6 @@ you you might need to force re-fontification initially:
      #f)
     (license #f)))
 
-;; emacs-srfi
-
 (define-public emacs-bm
   (package
     (name "emacs-bm")
@@ -194,92 +126,6 @@ you you might need to force re-fontification initially:
     (description
      #f)
     (license #f)))
-
-;; (define-public emacs-ts
-;;   (package
-;;     (name "emacs-ts")
-;;     (version "20191010.210")
-;;     (source
-;;       (origin
-;;         (method url-fetch)
-;;         (uri (string-append
-;;                "https://melpa.org/packages/ts-"
-;;                version
-;;                ".el"))
-;;         (sha256
-;;           (base32
-;;             "0zbqavmz01l1q89l812iqhcwpw08z3zrgsraa5d4d3fkdaxjnvrv"))))
-;;     (build-system emacs-build-system)
-;;     (propagated-inputs
-;;       `(("emacs-dash" ,emacs-dash) ("emacs-s" ,emacs-s)))
-;;     (home-page "http://github.com/alphapapa/ts.el")
-;;     (synopsis "Timestamp and date/time library")
-;;     (description
-;;      #f)
-;;     (license #f)))
-
-;; (define-public emacs-ts
-;;   (let ((commit "df48734ef046547c1aa0de0f4c07d11964ef1f7f")
-;;         (revision "1"))
-;;     (package
-;;       (name "emacs-ts")
-;;       (version (git-version "0.2" revision commit))
-;;       (source (origin
-;;                 (method git-fetch)
-;;                 (uri (git-reference
-;;                       (url "https://github.com/alphapapa/ts.el")
-;;                       (commit commit)))
-;;                 (sha256
-;;                  (base32
-;;                   "0hi0dfcwrr0vxp26v3f6radpmmwxbiz3px3br0cydfi6axikw9xl"))
-;;                 (file-name (git-file-name name version))))
-;;       (build-system emacs-build-system)
-;;       (propagated-inputs
-;;        `(("emacs-s" ,emacs-s)
-;;          ("emacs-dash" ,emacs-dash)))
-;;       (arguments
-;;        ;; XXX: Three tests are failing because of a timezone-related issue
-;;        ;; with how they're written.  On my machine, all the failing test
-;;        ;; results are 18000 seconds (5 hours) off.
-
-;;        ;; The ts-parse-org function accepts a string without any timezone
-;;        ;; info, not assumed to be in Unix time, and converts it to a so-called
-;;        ;; ts struct.  The ts-unix function (accessor) accepts a ts struct,
-;;        ;; then seems to assume the struct's corresponding time is in terms of
-;;        ;; the user's current time zone, before returning a Unix time in
-;;        ;; seconds.
-
-;;        ;; The failing tests all have similar problems, but nothing else about
-;;        ;; the library seems particularly off.
-
-;;        `(#:tests? #t
-;;          #:test-command '("emacs" "--batch"
-;;                           "-l" "test/test.el"
-;;                           "-f" "ert-run-tests-batch-and-exit")
-;;          #:phases
-;;          (modify-phases %standard-phases
-;;            (add-before 'check 'make-tests-writable
-;;              (lambda _
-;;                (make-file-writable "test/test.el")
-;;                #t))
-;;            (add-before 'check 'delete-failing-tests
-;;              (lambda _
-;;                (emacs-batch-edit-file "test/test.el"
-;;                  `(progn (progn
-;;                           (goto-char (point-min))
-;;                           (dolist (test-regexp '("ert-deftest ts-format"
-;;                                                  "ert-deftest ts-parse-org\\_>"
-;;                                                  "ert-deftest ts-parse-org-element"))
-;;                                   (re-search-forward test-regexp)
-;;                                   (beginning-of-line)
-;;                                   (kill-sexp)))
-;;                          (basic-save-buffer)))
-;;                #t)))))
-;;       (home-page "https://github.com/alphapapa/ts.el")
-;;       (synopsis "Timestamp and date/time library")
-;;       (description "This package facilitates manipulating dates, times, and
-;; timestamps by providing a @code{ts} struct.")
-;;       (license license:gpl3+))))
 
 (define-public emacs-stan-mode
   (package
@@ -311,7 +157,6 @@ Usage:
   (require 'stan-mode)
 ")
     (license #f)))
-
 
 (define-public emacs-nadvice
   (package
