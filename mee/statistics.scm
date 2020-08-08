@@ -2039,3 +2039,73 @@ various statistical analysis programs such as R, Julia, and JAGS.")
     (description
       "Contains the function 'ggsurvplot()' for drawing easily beautiful and 'ready-to-publish' survival curves with the 'number at risk' table and 'censoring count plot'.  Other functions are also available to plot adjusted curves for `Cox` model and to visually examine 'Cox' model assumptions.")
     (license gpl2)))
+
+;;; BSTS (bayesian structural time series)
+;;;
+
+(define-public r-boom
+  (package
+    (name "r-boom")
+    (version "0.9.6")
+    (source
+      (origin
+        (method url-fetch)
+        (uri (cran-uri "Boom" version))
+        (sha256
+          (base32
+            "0qzjj4dikphhpwcf1lkrf574bdf9j7c1xjpl8lpg4nqjjqd0hbwg"))))
+    (properties `((upstream-name . "Boom")))
+    (build-system r-build-system)
+    (propagated-inputs `(("r-mass" ,r-mass)))
+    (home-page
+      "https://cran.r-project.org/web/packages/Boom")
+    (synopsis "Bayesian Object Oriented Modeling")
+    (description
+      "This package provides a C++ library for Bayesian modeling, with an emphasis on Markov chain Monte Carlo.  Although boom contains a few R utilities (mainly plotting functions), its primary purpose is to install the BOOM C++ library on your system so that other packages can link against it.")
+    (license #f)))
+
+(define-public r-boomspikeslab
+  (package
+    (name "r-boomspikeslab")
+    (version "1.2.3")
+    (source
+      (origin
+        (method url-fetch)
+        (uri (cran-uri "BoomSpikeSlab" version))
+        (sha256
+          (base32
+            "0ib9i5y1a5r1q1iy1vms95lh7f1naqn737nvhrg8na7isxp6jgir"))))
+    (properties `((upstream-name . "BoomSpikeSlab")))
+    (build-system r-build-system)
+    (propagated-inputs `(("r-boom" ,r-boom)))
+    (home-page
+      "https://cran.r-project.org/web/packages/BoomSpikeSlab")
+    (synopsis "MCMC for Spike and Slab Regression")
+    (description
+      "Spike and slab regression with a variety of residual error distributions corresponding to Gaussian, Student T, probit, logit, SVM, and a few others.  Spike and slab regression is Bayesian regression with prior distributions containing a point mass at zero.  The posterior updates the amount of mass on this point, leading to a posterior distribution that is actually sparse, in the sense that if you sample from it many coefficients are actually zeros.  Sampling from this posterior distribution is an elegant way to handle Bayesian variable selection and model averaging.  See <DOI:10.1504/IJMMNO.2014.059942> for an explanation of the Gaussian case.")
+    (license #f)))
+
+(define-public r-bsts
+  (package
+    (name "r-bsts")
+    (version "0.9.5")
+    (source
+      (origin
+        (method url-fetch)
+        (uri (cran-uri "bsts" version))
+        (sha256
+          (base32
+            "17q82f57xgzgil06z47dgkll88iz6qng7nxw1gjn6sqi5zk72lxq"))))
+    (properties `((upstream-name . "bsts")))
+    (build-system r-build-system)
+    (propagated-inputs
+      `(("r-boom" ,r-boom)
+        ("r-boomspikeslab" ,r-boomspikeslab)
+        ("r-xts" ,r-xts)
+        ("r-zoo" ,r-zoo)))
+    (home-page
+      "https://cran.r-project.org/web/packages/bsts")
+    (synopsis "Bayesian Structural Time Series")
+    (description
+      "Time series regression using dynamic linear models fit using MCMC.  See Scott and Varian (2014) <DOI:10.1504/IJMMNO.2014.059942>, among many other sources.")
+    (license #f)))
