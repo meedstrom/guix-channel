@@ -1181,3 +1181,35 @@ properly.  In that case, you can edit the bitmap faces as you wish in your
 config.  modern-fringes was designed assuming the fringe width is 8 pixels
 wide.  It will likely look strange if the width is any less or more.")
     (license #f)))
+
+(define-public emacs-exwm-firefox-core
+  (package
+    (name "emacs-exwm-firefox-core")
+    (version "20190812.2110")
+    (source
+      (origin
+        (method url-fetch)
+        (uri (string-append
+               "https://melpa.org/packages/exwm-firefox-core-"
+               version
+               ".el"))
+        (sha256
+          (base32
+            "1h3arx0k61qy7929aaxbalnfypcm94lbx3ry0lzrn73lz15c14yn"))))
+    (build-system emacs-build-system)
+    (propagated-inputs `(("emacs-exwm" ,emacs-exwm)))
+    (home-page
+      "https://github.com/walseb/exwm-firefox-core")
+    (synopsis "Firefox hotkeys to functions")
+    (description
+      "This package contains functions that execute exwm keypresses mapped in
+firefox to the action described in the function name.
+
+This package is only a library so it does not contain any keybindings
+If you don't want to do bind the functions yourself, check out other
+packages using this library like `exwm-firefox-evil.el'
+
+All firefox hotkeys can be found here:
+https://support.mozilla.org/en-US/kb/keyboard-shortcuts-perform-firefox-tasks-quickly
+")
+    (license #f)))
