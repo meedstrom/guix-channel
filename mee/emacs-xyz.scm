@@ -26,6 +26,31 @@
   #:use-module (gnu packages emacs)
   #:use-module (gnu packages emacs-xyz))
 
+(define-public emacs-weechat
+  (package
+    (name "emacs-weechat")
+    (version "20190520.1551")
+    (source
+      (origin
+        (method url-fetch)
+        (uri (string-append
+               "https://melpa.org/packages/weechat-"
+               version
+               ".tar"))
+        (sha256
+          (base32
+            "1jpdpsxvqh6rzyh2283cyspwli0pwp7kb2c0jr9ya6shawpk8djn"))))
+    (build-system emacs-build-system)
+    (propagated-inputs
+      `(("emacs-s" ,emacs-s)
+        ("emacs-tracking" ,emacs-tracking)))
+    (home-page
+      "https://github.com/the-kenny/weechat.el")
+    (synopsis
+      "Chat via WeeChat's relay protocol in Emacs")
+    (description #f)
+    (license #f)))
+
 (define-public emacs-explain-pause
   (package
     (name "emacs-explain-pause")

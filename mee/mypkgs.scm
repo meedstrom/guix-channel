@@ -99,6 +99,7 @@
   #:use-module (gnu packages mail)
   #:use-module (gnu packages wget)
   #:use-module (gnu packages time)
+  #:use-module (gnu packages serialization)
   #:use-module (gnu packages ruby)
   #:use-module (gnu packages gettext)
   #:use-module (gnu packages m4)
@@ -119,6 +120,58 @@
 ;; https://sourceforge.net/projects/narocad/
 ;; http://solvespace.com/index.pl
 ;; https://github.com/lpereira/hardinfo
+;; https://github.com/matrix-org/pantalaimon to go with emacs-matrix-client
+;; https://github.com/poljar/weechat-matrix to go with emacs-weechat
+
+;; WIP
+(define-public dual-function-keys
+  (package
+   (name "dual-function-keys")
+   (version "1.4.0")
+   (source
+    (origin
+     (method git-fetch)
+     (uri (git-reference (url "https://gitlab.com/interception/linux/plugins/dual-function-keys.git")
+                         (commit version)))
+     (sha256 (base32 "0ch6dvf172g29mj5rsa07wynkwmgkzl3ilbm0j0pvg0qa7namjk7"))
+     (file-name (git-file-name name version))))
+   (build-system cmake-build-system)
+   (inputs
+    `(("boost" ,boost)))
+   (propagated-inputs
+    `(("interception-tools" ,interception-tools)))
+   (home-page "https://gitlab.com/interception/linux/plugins/dual-function-keys")
+   (synopsis "")
+   (description synopsis)
+   (license license:expat)))
+
+(define-public interception-tools
+  (package
+   (name "interception-tools")
+   (version "0.6.4")
+   (source
+    (origin
+     (method git-fetch)
+     (uri (git-reference (url "https://gitlab.com/interception/linux/tools")
+                         (commit "0d9223e81333a8e1667eab96d1b7378d6578d214")))
+     (sha256 (base32 "067c1f2iw6bdsy725js976vyllq9s63wh0x3y27kgh4vwlv8niqw"))
+     (file-name (git-file-name name version))))
+   (build-system cmake-build-system)
+   (inputs
+    `(("boost" ,boost)
+      ("libevdev" ,libevdev)
+      ("eudev" ,eudev)
+      ("yaml-cpp" ,yaml-cpp)
+      ("glibc" ,glibc)))
+   (propagated-inputs
+    `(("libevdev" ,libevdev)
+      ("eudev" ,eudev)
+      ("yaml-cpp" ,yaml-cpp)
+      ("glibc" ,glibc)))
+   (home-page "https://gitlab.com/interception/linux/tools")
+   (synopsis "")
+   (description synopsis)
+   (license license:gpl3)))
 
 (define-public svtplay-dl
   (let ((commit "81cb18f"))
@@ -199,7 +252,7 @@
       ("zlib" ,zlib)
       ("tokyocabinet" ,tokyocabinet)))
    (synopsis "Like du, but uses an index for speed and can generate graphs.")
-   (home-page "")
+   (home-page "https://github.com/zevv/duc")
    (description "Provides commands such as `duc ls' which is like `du -hs * | sort -hr',
 and `duc gui' which is similar to baobab (the Gnome Disk Analyzer). Duc uses an
 index to provide instant results, but `duc index' should be run periodically
@@ -254,7 +307,7 @@ emacs' dired-du-mode, for example.")
      (home-page "https://www.chiark.greenend.org.uk/~sgtatham/agedu/")
      (description "Agedu makes it easier to find forgotten large files, e.g. an
 archive you unpacked once and haven't accessed since. It can also be used
-simply as an indexed du.")
+simply as an indexed du, like duc.")
      (license license:expat))))
 
 (define-public go-github-com-radovskyb-watcher
@@ -379,9 +432,8 @@ unofficial Twee2.")
      (home-page "https://www.motoslave.net/sugarcube/2/")
      (description
       (string-append
-       "A so-called story format is a collection of macros and stylesheets,
-necessary to compile any story with Twine/Tweego. This will be made
-available to Tweego instantly, but to add it to Twine, you must do manual
-clicking: find the file in ~/.guix-profile/" story-formats-dir ", 
-or the equivalent location if your Guix profile is elsewhere."))
+       "A collection of macros and stylesheets necessary to compile SugarCube2 stories
+with Twine/Tweego. A Guix-installed Tweego should find it automatically, but to
+add it to Twine, click your way to the file in ~/.guix-profile/" story-formats-dir ",
+or equivalent location if your Guix profile is elsewhere."))
      (license license:bsd-2))))
